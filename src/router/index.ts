@@ -33,6 +33,13 @@ const routes: Array<RouteRecordRaw> = [
         name: "deviceListView",
         component: () => import("../views/device/DeviceListView.vue"),
       },
+      // 设备详情
+      {
+        path: "deviceDetailView",
+        name: "deviceDetailView",
+        component: () => import("../views/device/DeviceDetailView.vue"),
+      },
+
     ],
   },
 ]

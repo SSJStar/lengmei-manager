@@ -89,9 +89,6 @@ const handelChange = (index: number)=> {
       }
     }
   }
-  // selecteds.forEach((a: { name: string; }) => {
-  //   console.log("name~"+a.name);
-  // });
 };
 const show = () => {
   isShow.value = true;
@@ -113,8 +110,16 @@ const hide = (btnIndex: number) => {
   if (btnIndex === 0) {
     props.close(btnIndex, "");
   } else if (btnIndex === 1) {
-    // props.close(btnIndex, form.inputValue);
+    props.close(btnIndex, selecteds);
   }
+  // 打印绑定了哪些用户
+  selecteds.forEach((a: { name: string; }) => {
+    console.log("绑定name~"+a.name);
+  });
+  //   取消所有选中(恢复默认状态)
+  jsonData.forEach(a => {
+    a.selectedState = 0
+  });
 };
 
 // 取消事件

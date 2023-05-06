@@ -21,7 +21,7 @@
               <div>address: {{ scope.row.address }}</div>
             </template>
             <template #reference>
-              <el-tag>{{ scope.row.device_type }}</el-tag>
+              <el-tag @click="handleDetail()">{{ scope.row.device_type }}</el-tag>
             </template>
           </el-popover>
         </template>
@@ -63,13 +63,24 @@
 import {Burger, Timer} from '@element-plus/icons-vue'
 import {ssjTip} from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue"; //弹窗-子视图
-import BindView from "@/views/device/BindSelectedView.vue"; //弹窗-子视图-绑定
+import BindView from "@/views/device/BindSelectedView.vue";
+import router from "@/router"; //弹窗-子视图-绑定
 interface User {
   device_id: string
   device_type: string
   address: string
   state: string
 }
+
+/** 查看设备详情
+ *
+ *  作者：小青龙
+ *  时间：2023/05/06 16:05:48
+ */
+const handleDetail = () => {
+  console.log("handleDetail~");
+router.push("/layoutView/deviceDetailView")
+};
 
 /** 绑定
  *
