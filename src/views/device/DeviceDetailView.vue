@@ -68,8 +68,10 @@
   </div>
 
   <!-- 【使用记录】 -->
+  <label class="title-one">【使用记录】</label>
+  <!-- 列表 -->
   <el-table :data="userHistoryList" class="listView">
-    <el-table-column label="昵称" width="180">
+    <el-table-column label="昵称">
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
@@ -77,29 +79,29 @@
       </template>
     </el-table-column>
 
-<!--    &lt;!&ndash; 手机号 &ndash;&gt;-->
-<!--    <el-table-column label="手机号" width="180px">-->
-<!--      <template #default="scope">-->
-<!--        <el-popover effect="light" trigger="hover" placement="top" width="auto">-->
-<!--          <template #default>-->
-<!--            <div>name: {{ scope.row.phone }}</div>-->
-<!--            <div>address: {{ scope.row.address }}</div>-->
-<!--          </template>-->
-<!--          <template #reference>-->
-<!--            <el-tag @click="handleDetail()">{{ scope.row.phone }}</el-tag>-->
-<!--          </template>-->
-<!--        </el-popover>-->
-<!--      </template>-->
-<!--    </el-table-column>-->
+    <!-- 手机号 -->
+    <el-table-column label="手机号">
+      <template #default="scope">
+        <el-popover effect="light" trigger="hover" placement="top" width="auto">
+          <template #default>
+            <div>name: {{ scope.row.phone }}</div>
+            <div>address: {{ scope.row.address }}</div>
+          </template>
+          <template #reference>
+            <el-tag @click="handleDetail()">{{ scope.row.phone }}</el-tag>
+          </template>
+        </el-popover>
+      </template>
+    </el-table-column>
 
-<!--    &lt;!&ndash; 使用时间 &ndash;&gt;-->
-<!--    <el-table-column label="使用记录" width="180px">-->
-<!--      <template #default="scope">-->
-<!--        <div style="display: flex; align-items: center">-->
-<!--          <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
-<!--        </div>-->
-<!--      </template>-->
-<!--    </el-table-column>-->
+    <!-- 使用时间 -->
+    <el-table-column label="使用记录">
+      <template #default="scope">
+        <div style="display: flex; align-items: center">
+          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+        </div>
+      </template>
+    </el-table-column>
   </el-table>
 
 </div>
@@ -127,6 +129,21 @@ let userHistoryList = [
     name:'李大军',
     phone:'15567875593',
     date:'2023-03-25',
+  },
+  {
+    name:'王晓东',
+    phone:'15167178859',
+    date:'2023-04-26',
+  },
+  {
+    name:'许茹萍',
+    phone:'13386887795',
+    date:'2023-04-09',
+  },
+  {
+    name:'李大军',
+    phone:'15567875593',
+    date:'2023-03-25',
   }
 ];
 </script>
@@ -135,6 +152,10 @@ let userHistoryList = [
 .DeviceDetailDiv {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow-y: scroll;
 }
 .backBtn {
   float: left;

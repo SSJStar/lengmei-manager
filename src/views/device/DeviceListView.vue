@@ -3,7 +3,7 @@
     <!-- 数据列表 -->
     <el-table :data="tableData" class="listView">
       <!--  第一列  -->
-      <el-table-column label="设备编号" width="180">
+      <el-table-column label="设备编号" >
         <template #default="scope">
           <div style="display: flex; align-items: center">
             <!--          <el-icon><timer /></el-icon>-->
@@ -13,7 +13,7 @@
       </el-table-column>
 
       <!--  第二列  -->
-      <el-table-column label="设备型号" width="180">
+      <el-table-column label="设备型号">
         <template #default="scope">
           <el-popover effect="light" trigger="hover" placement="top" width="auto">
             <template #default>
@@ -28,6 +28,21 @@
       </el-table-column>
 
       <!--  第三列  -->
+      <el-table-column label="持有者">
+        <template #default="scope">
+          <el-popover effect="light" trigger="hover" placement="top" width="auto">
+            <template #default>
+              <div>name: {{ scope.row.holder }}</div>
+              <div>address: {{ scope.row.address }}</div>
+            </template>
+            <template #reference>
+              <span style="margin-left: 10px">{{ scope.row.holder }}</span>
+            </template>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <!--  第四列  -->
       <el-table-column label="绑定/解绑">
         <template #default="scope">
           <el-button size="small" @click="handleBind(scope.$index, scope.row)"
@@ -41,8 +56,8 @@
         </template>
       </el-table-column>
 
-      <!--  第四列  -->
-      <el-table-column label="设备状态" width="180">
+      <!--  第五列  -->
+      <el-table-column label="设备状态">
         <template #default="scope">
           <div style="display: flex; align-items: center">
             <el-icon><timer /></el-icon>
@@ -70,6 +85,7 @@ interface User {
   device_type: string
   address: string
   state: string
+  holder: string, //持有者
 }
 
 /** 查看设备详情
@@ -133,72 +149,84 @@ const tableData: User[] = [
     device_type: 'zw1001',
     address: 'No. 189, Grove St, Los Angeles',
     state: "0",
+    holder: "李强", //持有者
   },
   {
     device_id: '2',
     device_type: 'zw2105',
     address: 'No. 189, Grove St, Los Angeles',
     state: "1",
+    holder: "王羽", //持有者
   },
   {
     device_id: '3',
     device_type: 'zw1516',
     address: 'No. 189, Grove St, Los Angeles',
     state: "2",
+    holder: "李林", //持有者
   },
   {
     device_id: '4',
     device_type: 'zw1001',
     address: 'No. 189, Grove St, Los Angeles',
     state: "3",
+    holder: "李秋生", //持有者
   },
   {
     device_id: '5',
     device_type: 'zw2105',
     address: 'No. 189, Grove St, Los Angeles',
     state: "1",
+    holder: "王萌", //持有者
   },
   {
     device_id: '6',
     device_type: 'zw1516',
     address: 'No. 189, Grove St, Los Angeles',
     state: "2",
+    holder: "张豪", //持有者
   },
   {
     device_id: '7',
     device_type: 'zw1001',
     address: 'No. 189, Grove St, Los Angeles',
     state: "0",
+    holder: "李雪娜", //持有者
   },
   {
     device_id: '8',
     device_type: 'zw2105',
     address: 'No. 189, Grove St, Los Angeles',
     state: "1",
+    holder: "赵岑", //持有者
   },
   {
     device_id: '9',
     device_type: 'zw1516',
     address: 'No. 189, Grove St, Los Angeles',
     state: "2",
+    holder: "孙建", //持有者
   },
   {
     device_id: '10',
     device_type: 'zw1001',
     address: 'No. 189, Grove St, Los Angeles',
     state: "3",
+    holder: "李秋风", //持有者
   },
   {
     device_id: '11',
     device_type: 'zw2105',
     address: 'No. 189, Grove St, Los Angeles',
     state: "1",
+    holder: "林奇", //持有者
   },
   {
     device_id: '12',
     device_type: 'zw1516',
     address: 'No. 189, Grove St, Los Angeles',
     state: "2",
+    holder: "张圣儒", //持有者
   },
 ]
 
@@ -234,7 +262,7 @@ const  getState = (type: string) => {
 .listView {
   width: 100%;
   height: 400px;
-  background-color: #42b983;
+  /*background-color: #42b983;*/
 }
 
 /* 添加设备 */
