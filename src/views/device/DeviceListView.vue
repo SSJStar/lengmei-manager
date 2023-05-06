@@ -234,6 +234,7 @@ const  getState = (type: string) => {
 .listView {
   width: 100%;
   height: 400px;
+  background-color: #42b983;
 }
 
 /* 添加设备 */
