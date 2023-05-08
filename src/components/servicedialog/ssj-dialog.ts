@@ -6,9 +6,10 @@ import {
   render,
   VNode,
 } from "vue";
-import Tip from "./ssj-dialog-child.vue";
+// import Tip from "./ssj-dialog-child.vue";
 import { DialogProps } from "element-plus";
 import component from "*.vue";
+import AlertView from "./AlertView.vue";
 /*
 对象：Vue会自动注入到install 方法
 function： 就直接在页面使用
@@ -64,14 +65,14 @@ export function ssjTip(vars: any) {
 // 页面中引入---函数式返回
 export function ssjAlert(vars: DialogType) {
   console.log("请求参数：～～～");
-  console.log(vars.params);
+  console.log(vars);
   return new Promise((resolve, reject) => {
-    const tipInstance: VNode = createVNode(vars.component, {
+    const tipInstance: VNode = createVNode(AlertView, {
       close: (btnIndex: number, msg?: any) => {
         //调用resolve 告诉外层
         resolve(msg);
       },
-      params: vars.params,
+      params: vars,
     });
     render(tipInstance, document.body);
     tipInstance.component?.exposed?.show();

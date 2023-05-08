@@ -79,7 +79,10 @@ import {Burger, Timer} from '@element-plus/icons-vue'
 import {ssjTip} from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue"; //弹窗-子视图
 import BindView from "@/views/device/BindSelectedView.vue";
-import router from "@/router"; //弹窗-子视图-绑定
+import router from "@/router";
+import {onMounted} from "vue"; //弹窗-子视图-绑定
+import { getDeviceList } from "@/api/api.js" //请求
+import { ref } from "vue";
 interface User {
   device_id: string
   device_type: string
@@ -87,6 +90,155 @@ interface User {
   state: string
   holder: string, //持有者
 }
+
+// 数据源
+// let tableData: User[] = [{},{}]
+let tableData = ref([
+  {
+    device_id: '1',
+    device_type: 'zw1001',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "0",
+    holder: "李强", //持有者
+    users:[
+      {
+        user_id: "10001",
+        name: "张三",
+      },
+      {
+        user_id: "10001",
+        name: "张小萌",
+      },
+    ]
+  },
+  {
+    device_id: '2',
+    device_type: 'zw2105',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "1",
+    holder: "王羽", //持有者
+    users:[
+      {
+        user_id: "10001",
+        name: "李丹",
+      },
+      {
+        user_id: "10001",
+        name: "张大圣",
+      },
+      {
+        user_id: "10001",
+        name: "李修缘",
+      },
+    ]
+  },
+  {
+    device_id: '3',
+    device_type: 'zw1516',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "2",
+    holder: "李林", //持有者
+    users:[
+      {
+        user_id: "10001",
+        name: "李月童",
+      },
+      {
+        user_id: "10001",
+        name: "吴三宝",
+      },
+      {
+        user_id: "10001",
+        name: "李道然",
+      },
+    ]
+  },
+  {
+    device_id: '4',
+    device_type: 'zw1001',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "3",
+    holder: "李秋生", //持有者
+    users:[
+      {
+        user_id: "10001",
+        name: "张胜意",
+      },
+      {
+        user_id: "10001",
+        name: "吴秋风",
+      },
+      {
+        user_id: "10001",
+        name: "李寒月",
+      },
+    ]
+  },
+  {
+    device_id: '5',
+    device_type: 'zw2105',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "1",
+    holder: "王萌", //持有者
+    users:[],
+  },
+  {
+    device_id: '6',
+    device_type: 'zw1516',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "2",
+    holder: "张豪", //持有者
+    users:[],
+  },
+  {
+    device_id: '7',
+    device_type: 'zw1001',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "0",
+    holder: "李雪娜", //持有者
+    users:[],
+  },
+  {
+    device_id: '8',
+    device_type: 'zw2105',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "1",
+    holder: "赵岑", //持有者
+    users:[],
+  },
+  {
+    device_id: '9',
+    device_type: 'zw1516',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "2",
+    holder: "孙建", //持有者
+    users:[],
+  },
+  {
+    device_id: '10',
+    device_type: 'zw1001',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "3",
+    holder: "李秋风", //持有者
+    users:[],
+  },
+  {
+    device_id: '11',
+    device_type: 'zw2105',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "1",
+    holder: "林奇", //持有者
+    users:[],
+  },
+  {
+    device_id: '12',
+    device_type: 'zw1516',
+    address: 'No. 189, Grove St, Los Angeles',
+    state: "2",
+    holder: "张圣儒", //持有者
+    users:[],
+  },
+])
 
 /** 查看设备详情
  *
@@ -108,8 +260,8 @@ const handleBind = (index: number, row: User) => {
   console.log("addDecice");
   let vars = {
     component:BindView,
-    title:"添加设备",
-    subTitle:"输入设备编号"
+    title:"绑定使用者",
+    subTitle:""
   }
   ssjTip(vars).then((msg)=>{
     console.log("ssjTip---->"+msg);
@@ -123,6 +275,15 @@ const handleBind = (index: number, row: User) => {
  */
 const handleUnBind = (index: number, row: User) => {
   console.log("解绑 - "+ index, row)
+  let vars = {
+    component: BindView,
+    title: "解绑使用者",
+    subTitle: "",
+    list: tableData.value[index].users,
+  }
+  ssjTip(vars).then((msg)=>{
+    console.log("ssjTip---->"+msg);
+  })
 }
 
 /** 添加设备 - 点击
@@ -138,97 +299,35 @@ const addDecice = () => {
     subTitle:"输入设备编号"
   }
   ssjTip(vars).then((msg)=>{
-    console.log("ssjTip---->"+msg);
+    console.log("ssjTip-- id -->"+msg);
+    const device_id = msg as string;
+    if (device_id.length == 0){
+      return;
+    }
+    let alertMsg = ""
+    if (msg == "000") {
+      alertMsg = "该设备号（000）不存在";
+    }else {
+      alertMsg = "设备添加成功"
+      let obj = {
+        device_id: device_id,
+        device_type: 'zw1001',
+        address: 'No. 189, Grove St, Los Angeles',
+        state: "0",
+        holder: "李小强", //持有者
+        users:[],
+      }
+      if (device_id.length > 0){
+        tableData.value.push(obj);
+        console.log("添加成功！tableData---->"+tableData);
+      }
+    }
+    // alertMsg有内容说明点击的不是"取消"按钮
+    setTimeout(()=>{
+      alert(alertMsg);
+    },1000)
   })
 }
-
-// 数据源
-const tableData: User[] = [
-  {
-    device_id: '1',
-    device_type: 'zw1001',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "0",
-    holder: "李强", //持有者
-  },
-  {
-    device_id: '2',
-    device_type: 'zw2105',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "1",
-    holder: "王羽", //持有者
-  },
-  {
-    device_id: '3',
-    device_type: 'zw1516',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "2",
-    holder: "李林", //持有者
-  },
-  {
-    device_id: '4',
-    device_type: 'zw1001',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "3",
-    holder: "李秋生", //持有者
-  },
-  {
-    device_id: '5',
-    device_type: 'zw2105',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "1",
-    holder: "王萌", //持有者
-  },
-  {
-    device_id: '6',
-    device_type: 'zw1516',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "2",
-    holder: "张豪", //持有者
-  },
-  {
-    device_id: '7',
-    device_type: 'zw1001',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "0",
-    holder: "李雪娜", //持有者
-  },
-  {
-    device_id: '8',
-    device_type: 'zw2105',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "1",
-    holder: "赵岑", //持有者
-  },
-  {
-    device_id: '9',
-    device_type: 'zw1516',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "2",
-    holder: "孙建", //持有者
-  },
-  {
-    device_id: '10',
-    device_type: 'zw1001',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "3",
-    holder: "李秋风", //持有者
-  },
-  {
-    device_id: '11',
-    device_type: 'zw2105',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "1",
-    holder: "林奇", //持有者
-  },
-  {
-    device_id: '12',
-    device_type: 'zw1516',
-    address: 'No. 189, Grove St, Los Angeles',
-    state: "2",
-    holder: "张圣儒", //持有者
-  },
-]
 
 // 数字转文字描述
 const  getState = (type: string) => {
@@ -249,6 +348,25 @@ const  getState = (type: string) => {
   console.log(type + " 未知")
   return "未知";
 }
+
+// 页面加载
+onMounted(()=>{
+  getDeviceList({
+    user_id: 10000014
+  }).then((res) => {
+    console.log("请求结束了\\n");
+    console.log(res);
+    if (res["code"] && res["code"] === "0") {
+      // 登录成功
+      alert("请求成功");
+      // json字符串 -> map
+      let userJson = JSON.parse(res["body"]);
+      // 取出用户名
+      let device_id = userJson["device_id"]; //设备编号
+      let device_type = userJson["device_type"]; //设备型号;
+    }
+  })
+});
 </script>
 
 <style>
