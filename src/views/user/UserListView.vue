@@ -41,6 +41,19 @@ let tableData = ref([
     user_name: "ad123",
     phone: '15167683359',
     address: 'No. 189, Grove St, Los Angeles',
+    devices: [{
+      index: 1,
+      name: "zw101",
+    },
+      {
+        index: 2,
+        name: "zq007",
+      },
+      {
+        index: 3,
+        name: "zr209",
+      },
+    ]
   },
   {
     user_id: '10008',
@@ -48,6 +61,19 @@ let tableData = ref([
     user_name: "bb333",
     phone: '13866382257',
     address: 'No. 189, Grove St, Los Angeles',
+    devices: [{
+      index: 1,
+      name: "zw201",
+    },
+      {
+        index: 2,
+        name: "zq207",
+      },
+      {
+        index: 3,
+        name: "zr109",
+      },
+    ]
   },
   {
     user_id: '10016',
@@ -55,6 +81,19 @@ let tableData = ref([
     user_name: "ad123",
     phone: '18058362730',
     address: 'No. 189, Grove St, Los Angeles',
+    devices: [{
+      index: 1,
+      name: "zw102",
+    },
+      {
+        index: 2,
+        name: "zq003",
+      },
+      {
+        index: 3,
+        name: "zr208",
+      },
+    ]
   },
   {
     user_id: '10025',
@@ -62,6 +101,19 @@ let tableData = ref([
     user_name: "aj668",
     phone: '13397975566',
     address: 'No. 189, Grove St, Los Angeles',
+    devices: [{
+      index: 1,
+      name: "zw101",
+    },
+      {
+        index: 2,
+        name: "zq007",
+      },
+      {
+        index: 3,
+        name: "zr209",
+      },
+    ]
   },
 ]);
 
@@ -107,7 +159,20 @@ const handleBind = (index: number, row: object) => {
   let vars = {
     component:BindView,
     title:"绑定设备",
-    subTitle:""
+    subTitle:"",
+    list: [{
+        index: 1,
+        name: "zw101",
+      },
+      {
+        index: 2,
+        name: "zq007",
+      },
+      {
+        index: 3,
+        name: "zr209",
+      },
+    ]
   }
   ssjTip(vars).then((msg)=>{
     console.log("ssjTip---->"+msg);
@@ -120,15 +185,15 @@ const handleBind = (index: number, row: object) => {
  */
 const handleUnBind = (index: number, row: object) => {
   console.log("解绑 - "+ index, row)
-  // let vars = {
-  //   component: BindView,
-  //   title: "解绑设备",
-  //   subTitle: "",
-  //   list: tableData.value[index].users,
-  // }
-  // ssjTip(vars).then((msg)=>{
-  //   console.log("ssjTip---->"+msg);
-  // })
+  let vars = {
+    component: BindView,
+    title: "解绑设备",
+    subTitle: "",
+    list: tableData.value[index].devices,
+  }
+  ssjTip(vars).then((msg)=>{
+    console.log("ssjTip---->"+msg);
+  })
 }
 </script>
 

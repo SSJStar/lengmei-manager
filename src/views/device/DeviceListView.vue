@@ -258,10 +258,21 @@ router.push("/layoutView/deviceDetailView")
 const handleBind = (index: number, row: User) => {
   console.log("绑定 - "+ index, row)
   console.log("addDecice");
+  let users = [
+    {
+      user_id: "10001",
+      name: "张三",
+    },
+    {
+      user_id: "10001",
+      name: "张小萌",
+    },
+  ];
   let vars = {
     component:BindView,
     title:"绑定使用者",
-    subTitle:""
+    subTitle:"",
+    list: users,
   }
   ssjTip(vars).then((msg)=>{
     console.log("ssjTip---->"+msg);
