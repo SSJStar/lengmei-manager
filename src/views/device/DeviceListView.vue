@@ -15,15 +15,15 @@
       <!--  第二列  -->
       <el-table-column label="设备型号">
         <template #default="scope">
-          <el-popover effect="light" trigger="hover" placement="top" width="auto">
-            <template #default>
-              <div>name: {{ scope.row.device_type }}</div>
-              <div>address: {{ scope.row.address }}</div>
-            </template>
-            <template #reference>
+<!--          <el-popover effect="light" trigger="hover" placement="top" width="auto">-->
+<!--            <template #default>-->
+<!--              <div>name: {{ scope.row.device_type }}</div>-->
+<!--              <div>address: {{ scope.row.address }}</div>-->
+<!--            </template>-->
+<!--            <template #reference>-->
               <el-tag @click="handleDetail()">{{ scope.row.device_type }}</el-tag>
-            </template>
-          </el-popover>
+<!--            </template>-->
+<!--          </el-popover>-->
         </template>
       </el-table-column>
 

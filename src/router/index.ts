@@ -27,6 +27,12 @@ const routes: Array<RouteRecordRaw> = [
         name: "userListView",
         component: () => import("../views/user/UserListView.vue"),
       },
+      // 用户详情
+      {
+        path: "userDetailView",
+        name: "userDetailView",
+        component: () => import("../views/user/UserDetailView.vue"),
+      },
       // 设备列表
       {
         path: "deviceListView",

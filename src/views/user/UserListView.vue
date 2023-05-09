@@ -1,7 +1,19 @@
 <template>
   <el-table :data="tableData" style="width: 100%">
-    <el-table-column prop="nick_name" label="用户名" width="180" />
-    <el-table-column prop="user_name" label="账号" width="180" />
+    <el-table-column prop="nick_name" label="用户名" width="180" >
+      <template #default="scope">
+        <span size="small" @click="handleDetail(scope.$index, scope.row)"
+        >{{scope.row.nick_name}}</span
+        >
+      </template>
+    </el-table-column>
+    <el-table-column prop="user_name" label="账号" width="180" >
+      <template #default="scope">
+        <span size="small" @click="handleDetail(scope.$index, scope.row)"
+        >{{scope.row.user_name}}</span
+        >
+      </template>
+    </el-table-column>
     <el-table-column prop="phone" label="手机号" />
     <!--  第四列  -->
     <el-table-column label="绑定/解绑">
@@ -122,11 +134,10 @@ let tableData = ref([
  *  作者：小青龙
  *  时间：2023/05/08 15:15:18
  */
-const handleDetail = () => {
-  console.log("handleDetail~");
-  router.push("/layoutView/deviceDetailView")
+const handleDetail = (index: number, row: object) => {
+  console.log(`handleDetail~x->${index} y->${row}`);
+  router.push("/layoutView/userDetailView")
 };
-
 
 /** 删除这条用户信息
  *
