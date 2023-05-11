@@ -6,17 +6,19 @@
 
     <!--  头像 + 昵称  -->
     <div class="userInfoDiv" id="head-div" ref="userInfoDivRef">
-      <!--  头像  -->
-      <img
-        src="https://randomuser.me/api/portraits/men/33.jpg"
-        alt=""
-        :onmouseenter="mouthIntoHead"
-        :onmouseleave="mouthLeaveHead"
-      />
-      <!--  昵称  -->
-      <label>
-        {{ nickNameVal }}
-      </label>
+<!--      &lt;!&ndash;  头像  &ndash;&gt;-->
+<!--      <img-->
+<!--        src="https://randomuser.me/api/portraits/men/33.jpg"-->
+<!--        alt=""-->
+<!--        :onmouseenter="mouthIntoHead"-->
+<!--        :onmouseleave="mouthLeaveHead"-->
+<!--      />-->
+<!--      &lt;!&ndash;  昵称  &ndash;&gt;-->
+<!--      <label>-->
+<!--        {{ nickNameVal }}-->
+<!--      </label>-->
+      <!--   假数据   -->
+      <label style="font-size: 16px;margin-top: 20px;height: 24px;">欢迎您，小王（管理员）</label>
     </div>
 
     <!-- box列表    flex-shrink: 0-->

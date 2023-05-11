@@ -1,7 +1,7 @@
 <template>
   <div class="deviceListDiv">
     <!-- 数据列表 -->
-    <el-table :data="tableData" class="listView">
+    <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" class="listView">
       <!--  第一列  -->
       <el-table-column label="设备编号" >
         <template #default="scope">
@@ -57,20 +57,36 @@
       </el-table-column>
 
       <!--  第五列  -->
-      <el-table-column label="设备状态">
+      <el-table-column label="设备状态" align="center" >
         <template #default="scope">
-          <div style="display: flex; align-items: center">
+<!--          <div style="display: flex; align-items: center;">-->
+          <div>
             <el-icon><timer /></el-icon>
-            <span style="margin-left: 10px">{{ getState(scope.row.state) }}</span>
+            <span style="margin-left: 10px;">{{ getState(scope.row.state) }}</span>
           </div>
         </template>
       </el-table-column>
     </el-table>
+
+<!--    <el-pagination-->
+<!--        :page-size="pageSize"-->
+<!--        :pager-count="paperCount"-->
+<!--        :current-page="currentPage"-->
+<!--        layout="prev, pager, next"-->
+<!--        :total="tableData.length" style="float: right"-->
+<!--    />-->
+    <el-pagination
+        :page-size="pageSize"
+        layout="prev, pager, next"
+        :total="tableData.length"
+        v-model="currentPage"
+        @current-change ="handelPageChange"
+        style="float: right"
+    />
     <!-- 添加设备 -->
     <div class="addDivceDiv">
       <button @click="addDecice">添加设备</button>
     </div>
-<!--    <button :click="addDecice" style="background-color: #42b983; top: 80px">添加设备</button>-->
   </div>
 </template>
 
@@ -240,6 +256,11 @@ let tableData = ref([
   },
 ])
 
+let currentPage = ref(1); // 当前页
+let pageSize = 4; //一页显示多少条
+let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
+
+
 /** 查看设备详情
  *
  *  作者：小青龙
@@ -360,6 +381,17 @@ const  getState = (type: string) => {
   return "未知";
 }
 
+/** 翻页 - 事件
+ *
+ *  作者：小青龙
+ *  时间：2023/05/11 11:11:44
+ */
+const handelPageChange = (val: number) =>{
+  console.log("当前页1---" + currentPage.value);
+  console.log("当前页2---" + val);
+  currentPage.value = val;
+};
+
 // 页面加载
 onMounted(()=>{
   getDeviceList({
@@ -390,7 +422,7 @@ onMounted(()=>{
 }
 .listView {
   width: 100%;
-  height: 400px;
+  /*height: 400px;*/
   /*background-color: #42b983;*/
 }
 

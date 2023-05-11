@@ -7,7 +7,7 @@
       <label class="title-one">【基本信息】</label>
       <!-- 用户ID -->
       <div class="itemDiv">
-        <label class="title-two">ID：</label>
+        <label class="title-two">编号：</label>
         <label class="title-three">{{ jsonData.user_id }}</label>
       </div>
       <!-- 姓名 -->
@@ -27,7 +27,8 @@
       </div>
       <!-- 工作单位/公司 -->
       <div class="itemDiv">
-        <label class="title-two" style="white-space: pre-wrap;">{{"工作单位  "+"\n"+"/公司："}}</label>
+<!--        <label class="title-two" style="white-space: pre-wrap;">{{"工作单位  "+"\n"+"/公司："}}</label>-->
+        <label class="title-two" style="white-space: pre-wrap;">{{"单位/公司："}}</label>
 <!--        <label class="title-two">工作单位/公司</label>-->
         <label class="title-three">{{ jsonData.company }}</label>
       </div>
@@ -38,7 +39,7 @@
       <el-table :data="jsonData.deviceList" class="listView">
         <el-table-column label="设备ID">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center;margin-left: 16px">
               <span>{{ scope.row.device_id }}</span>
             </div>
           </template>
@@ -55,7 +56,7 @@
 <!--              </template>-->
               <!--  字段显示的内容    -->
 <!--              <template #reference>-->
-                <span>{{ scope.row.device_type }}</span>
+                <span style="margin-left: 8px">{{ scope.row.device_type }}</span>
 <!--              </template>-->
 <!--            </el-popover>-->
           </template>
@@ -64,7 +65,7 @@
         <!-- 设备状态 -->
         <el-table-column label="拥有者">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center; margin-left: 8px">
               <span>{{ scope.row.holder }}</span>
             </div>
           </template>
@@ -74,7 +75,7 @@
         <el-table-column label="设备状态">
           <template #default="scope">
             <div style="display: flex; align-items: center;">
-              <span style="margin-left: 10px">{{ getState(scope.row.state) }}</span>
+              <span style="margin-left: 10px; margin-left: 16px">{{ getState(scope.row.state) }}</span>
             </div>
           </template>
         </el-table-column>
@@ -206,7 +207,7 @@ const  getState = (type: string) => {
 }
 .title-two {
   /*background-color: #42b983;*/
-  width: 80px;
+  width: 90px;
   text-align: right;
   float: left;
 }

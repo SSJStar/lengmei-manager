@@ -1,5 +1,6 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <div class="deviceListDiv">
+    <el-table :data="tableData" style="width: 100%">
     <el-table-column prop="nick_name" label="用户名" width="180" >
       <template #default="scope">
         <span size="small" @click="handleDetail(scope.$index, scope.row)"
@@ -29,7 +30,7 @@
       </template>
     </el-table-column>
     <!--  第五列  -->
-    <el-table-column label="删除">
+    <el-table-column label="删除" align="center">
       <template #default="scope">
         <el-button size="small" @click="handleDelete(scope.$index, scope.row)"
         >X</el-button
@@ -37,6 +38,21 @@
       </template>
     </el-table-column>
   </el-table>
+
+    <!-- 分页 -->
+    <el-pagination
+        :page-size="pageSize"
+        layout="prev, pager, next"
+        :total="tableData.length"
+        v-model="currentPage"
+        @current-change ="handelPageChange"
+        style="float: right"
+    />
+    <!-- 添加用户 -->
+    <div class="addUserDiv">
+      <button @click="addUser">添加用户</button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -45,6 +61,11 @@ import BindView from "@/views/device/BindSelectedView.vue";
 import {ssjTip} from "@/components/servicedialog/ssj-dialog";
 import { ref } from "vue";
 import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
+import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
+import AddUser from "@/views/user/AddUserView.vue";
+let currentPage = ref(1); // 当前页
+let pageSize = 4; //一页显示多少条
+let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
 
 let tableData = ref([
   {
@@ -189,6 +210,7 @@ const handleBind = (index: number, row: object) => {
     console.log("ssjTip---->"+msg);
   })
 }
+
 /** 解绑
  *
  *  作者：小青龙
@@ -206,8 +228,83 @@ const handleUnBind = (index: number, row: object) => {
     console.log("ssjTip---->"+msg);
   })
 }
+
+/** 添加用户 - 点击
+ *
+ *  作者：小青龙
+ *  时间：2023/05/05 15:06:11
+ */
+const addUser = () => {
+  console.log("addUser");
+  let vars = {
+    component:AddUser,
+    title:"添加用户",
+    subTitle:"输入手机号"
+  }
+  ssjTip(vars).then((msg)=>{
+    console.log("ssjTip-- id -->"+msg);
+    const device_id = msg as string;
+    if (device_id.length == 0){
+      return;
+    }
+    // let alertMsg = ""
+    // if (msg == "10000") {
+    //   alertMsg = "该设备号（000）不存在";
+    // }else {
+    //   alertMsg = "设备添加成功"
+    //   let obj = {
+    //     device_id: device_id,
+    //     device_type: 'zw1001',
+    //     address: 'No. 189, Grove St, Los Angeles',
+    //     state: "0",
+    //     holder: "李小强", //持有者
+    //     users:[],
+    //   }
+    //   if (device_id.length > 0){
+    //     tableData.value.push(obj);
+    //     console.log("添加成功！tableData---->"+tableData);
+    //   }
+    // }
+    // alertMsg有内容说明点击的不是"取消"按钮
+    // setTimeout(()=>{
+    //   alert(alertMsg);
+    // },1000)
+  })
+}
+
+/** 翻页 - 事件
+ *
+ *  作者：小青龙
+ *  时间：2023/05/11 11:11:44
+ */
+const handelPageChange = (val: number) =>{
+  console.log("当前页1---" + currentPage.value);
+  console.log("当前页2---" + val);
+  currentPage.value = val;
+};
 </script>
 
 <style scoped>
+.deviceListDiv {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: calc(100% - 40px);
+  /*display: flex;*/
+}
 
+/* 添加用户 */
+.addUserDiv {
+  width: 100%;
+  display: flow;
+}
+.addUserDiv button {
+  background-color: #42b983;
+  float: left;
+  margin-top: 20px;
+  font-size: 18px;
+  border-radius: 6px;
+  /*box-shadow: none;*/
+  border: none;/* 去掉阴影 */
+}
 </style>
