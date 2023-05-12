@@ -24,7 +24,7 @@
 
     <!-- 【故障】 -->
     <label class="title-one">【故障】</label>
-    <!-- 使用日期 -->
+    <!-- 故障代码 -->
     <div class="itemDiv">
       <label class="title-two">故障代码：</label><label>{{ jsonData.fault }}</label>
     </div>
@@ -37,7 +37,7 @@
     </div>
     <!-- 管道温度 -->
     <div class="itemDiv">
-      <label class="title-two">管道温度：</label><label>{{ jsonData.pipe_temperature }}</label>
+      <label class="title-two">管道温度：</label><label>{{ jsonData.pipe_temperature }}℃</label>
     </div>
     <!-- 真空表 -->
     <div class="itemDiv">
@@ -49,23 +49,23 @@
     </div>
     <!-- 液管追加 -->
     <div class="itemDiv">
-      <label class="title-two">液管追加：</label><label>{{ jsonData.yeguanzhuij }}</label>
+      <label class="title-two">液管追加：</label><label>{{ jsonData.yeguanzhuij }}m</label>
     </div>
     <!-- 再热管追加 -->
     <div class="itemDiv">
-      <label class="title-two">再热管追加：</label><label>{{ jsonData.zaireguanzhuij }}</label>
+      <label class="title-two">再热管追加：</label><label>{{ jsonData.zaireguanzhuij }}m</label>
     </div>
     <!-- 内机追加 -->
     <div class="itemDiv">
-      <label class="title-two">内机追加：</label><label>{{ jsonData.three_pipe_fill }}</label>
+      <label class="title-two">内机追加：</label><label>{{ jsonData.three_pipe_fill }}KG</label>
     </div>
     <!-- 外机追加 -->
     <div class="itemDiv">
-      <label class="title-two">外机追加：</label><label>{{ jsonData.external_machine_fill }}</label>
+      <label class="title-two">外机追加：</label><label>{{ jsonData.external_machine_fill }}KG</label>
     </div>
     <!-- 总追加 -->
     <div class="itemDiv">
-      <label class="title-two">总追加：</label><label>{{ jsonData.total_fill }}</label>
+      <label class="title-two">总追加：</label><label>{{ jsonData.total_fill }}KG</label>
     </div>
 
     <!-- 【绑定了哪些使用者】 -->
@@ -126,8 +126,6 @@
           </template>
         </el-table-column>
       </el-table>
-    <!--  间隔  -->
-    <!--    <div style="width: 100%; height: 800px; background-color: #42b983;margin-top: 0px">123456</div>-->
   </div>
 </div>
 </template>
@@ -136,7 +134,7 @@
 import router from "@/router";
 import { ref } from "vue";
 
-// 数据源
+//TODO 数据源
 let jsonData = ref({
   device_id:'1',
   device_type:'SDA-10001',
@@ -146,10 +144,10 @@ let jsonData = ref({
   vacuum_meter: "",// 真空表
   pipe_temperature: "",// 管道温度
   pipe_pressure: "",// 管压表
-  yeguanzhuij: "",// 液管追加
-  zaireguanzhuij: "2.5m",// 再热管追加
-  three_pipe_fill: "2KG",// 内机追加
-  external_machine_fill: "3KG",// 外机追加
+  yeguanzhuij: "1.5",// 液管追加
+  zaireguanzhuij: "2.5",// 再热管追加
+  three_pipe_fill: "2",// 内机追加
+  external_machine_fill: "3",// 外机追加
   total_fill: "",// 总追加
   userList: [
     {
@@ -218,6 +216,7 @@ let jsonData = ref({
 })
 
 /** 获取当前设备的使用者（可能存在多人）
+ *
  *  作者：小青龙
  *  时间：2023/05/09 16:58:14
  */
@@ -229,9 +228,13 @@ const getDeviceUsers = () => {
   return users.join("，");
 };
 
+/** 返回上一夜
+ *
+ *  作者：小青龙
+ *  时间：2023/05/12 14:42:18
+ */
 const handelBack = ()=> {
-  //返回上一页
-  router.go(-1);
+  router.go(-1); //返回上一页
 };
 </script>
 

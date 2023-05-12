@@ -62,7 +62,7 @@
           </template>
         </el-table-column>
 
-        <!-- 设备状态 -->
+        <!-- 拥有者 -->
         <el-table-column label="拥有者">
           <template #default="scope">
             <div style="display: flex; align-items: center; margin-left: 8px">
@@ -220,7 +220,7 @@ const  getState = (type: string) => {
 }
 .listView {
   width: 100%;
-  height: 200px;
+  /*height: 200px;*/
 }
 
 </style>

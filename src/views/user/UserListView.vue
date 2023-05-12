@@ -1,6 +1,6 @@
 <template>
   <div class="deviceListDiv">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" style="width: 100%">
     <el-table-column prop="nick_name" label="用户名" width="180" >
       <template #default="scope">
         <span size="small" @click="handleDetail(scope.$index, scope.row)"
@@ -66,7 +66,7 @@ import AddUser from "@/views/user/AddUserView.vue";
 let currentPage = ref(1); // 当前页
 let pageSize = 4; //一页显示多少条
 let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
-
+// 数据源
 let tableData = ref([
   {
     user_id:"10001",
@@ -148,6 +148,26 @@ let tableData = ref([
       },
     ]
   },
+  {
+    user_id: '10025',
+    nick_name: '武大郎',
+    user_name: "dw668",
+    phone: '13397975566',
+    address: 'No. 189, Grove St, Los Angeles',
+    devices: [{
+      index: 1,
+      name: "zw101",
+    },
+      {
+        index: 2,
+        name: "zq007",
+      },
+      {
+        index: 3,
+        name: "zr209",
+      },
+    ]
+  },
 ]);
 
 /** 查看用户详情
@@ -167,10 +187,11 @@ const handleDetail = (index: number, row: object) => {
  */
 const handleDelete = (index: number, row: object) => {
   console.log("handleDelete~");
+  let nickName = tableData.value[index].nick_name;
   let vars = {
     component:BindView,
     title:"温馨提醒",
-    subTitle:"一旦删除，用户数据将不可恢复，确定删除吗？"
+    subTitle:`一旦删除，用户数据将不可恢复，确定删除${nickName}吗？`
   }
   ssjAlert(vars).then((val)=>{
     console.log('弹窗返回数据---'+val);
@@ -243,32 +264,14 @@ const addUser = () => {
   }
   ssjTip(vars).then((msg)=>{
     console.log("ssjTip-- id -->"+msg);
-    const device_id = msg as string;
-    if (device_id.length == 0){
+    // const device_id = msg as string;
+    if (msg == null || (msg as JSON)["phone"].length == 0){
       return;
     }
-    // let alertMsg = ""
-    // if (msg == "10000") {
-    //   alertMsg = "该设备号（000）不存在";
-    // }else {
-    //   alertMsg = "设备添加成功"
-    //   let obj = {
-    //     device_id: device_id,
-    //     device_type: 'zw1001',
-    //     address: 'No. 189, Grove St, Los Angeles',
-    //     state: "0",
-    //     holder: "李小强", //持有者
-    //     users:[],
-    //   }
-    //   if (device_id.length > 0){
-    //     tableData.value.push(obj);
-    //     console.log("添加成功！tableData---->"+tableData);
-    //   }
-    // }
-    // alertMsg有内容说明点击的不是"取消"按钮
-    // setTimeout(()=>{
-    //   alert(alertMsg);
-    // },1000)
+    const json = msg as JSON;
+    console.log(`手机号->${json["phone"]}`);
+    console.log(`昵称->${json["nick_name"]}`);
+    console.log(`单位->${json["company"]}`);
   })
 }
 

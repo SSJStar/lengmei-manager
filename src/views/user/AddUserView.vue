@@ -11,7 +11,7 @@
       <div class="input-div">
         <input
             type="text"
-            placeholder=" 手机号"
+            placeholder=" 请输入手机号"
             v-model="form.phone"
         />
       </div>
@@ -20,7 +20,7 @@
       <div class="input-div">
         <input
             type="text"
-            placeholder=" 昵称"
+            placeholder=" 请输入昵称"
             v-model="form.nick_name"
         />
       </div>
@@ -29,7 +29,7 @@
       <div class="input-div">
         <input
             type="text"
-            placeholder=" 单位/公司"
+            placeholder=" 请输入工作单位/公司"
             v-model="form.company"
         />
       </div>
@@ -220,5 +220,23 @@ onMounted(() => {
   width: 100px;
   border-radius: 10px;
   border-color: rgba(0, 0, 0, 0);
+}
+
+/* 输入框-placeholder-颜色、字体大小 */
+::-webkit-input-placeholder{/*Webkit browsers*/
+  color:#999;
+  font-size:16px;
+}
+:-moz-placeholder{/*Mozilla Firefox 4 to 8*/
+  color:#999;
+  font-size:16px;
+}
+/*::moz-placeholder{!*Mozilla Firefox 19+*!*/
+/*  color:#999;*/
+/*  font-size:16px;*/
+/*}*/
+:-ms-input-placeholder{/*Internet Explorer 10+*/
+  color:#999;
+  font-size:16px;
 }
 </style>
