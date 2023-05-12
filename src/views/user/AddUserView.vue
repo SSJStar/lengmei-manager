@@ -32,6 +32,7 @@
             type="text"
             placeholder=" 请输入工作单位/公司"
             v-model="form.company"
+            v-model:="phoneValue"
         />
       </div>
 <!--      <div class="input-div" style="margin-top: 20px;">-->
@@ -49,10 +50,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import { validatorPhone } from "@/statics/ssj-validate-rule";
 
 let isShow = ref(false);
+let phoneValue = ref();
 // //定义类型 Obj
 // export interface SSJDialogParams {
 //   // [key: string]: string | number;
@@ -151,7 +153,23 @@ defineExpose({
 
 onMounted(() => {
   // 此刻的props是没有值的，要在show()函数里进行操作
-});
+  // phoneValue
+  // vm = Vue.createApp(app).mount('#app')
+  // vm.$watch('counter', function(nval, oval) {
+  //   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+  // });
+//   watch : {
+//     phoneValue.value(newValue,oldValue) {
+//
+//     }
+//   } computed:{
+//
+//   };
+// });
+  watch(phoneValue, (newValue, oldValue) => {
+
+  });
+})
 
 // const phoneInputChange = (item) => {
 //   console.log(item.value)
