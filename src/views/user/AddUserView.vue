@@ -13,6 +13,7 @@
             type="text"
             placeholder=" 请输入手机号"
             v-model="form.phone"
+            id="phoneID"
         />
       </div>
 
@@ -33,6 +34,9 @@
             v-model="form.company"
         />
       </div>
+<!--      <div class="input-div" style="margin-top: 20px;">-->
+<!--        <label style="color:salmon; width: 70%; text-align: left;">请输入正确的手机号</label>-->
+<!--      </div>-->
 
       <div class="actionView">
         <!--    分割线    -->
@@ -46,8 +50,9 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
-let isShow = ref(false);
+import { validatorPhone } from "@/statics/ssj-validate-rule";
 
+let isShow = ref(false);
 // //定义类型 Obj
 // export interface SSJDialogParams {
 //   // [key: string]: string | number;
@@ -111,8 +116,33 @@ const cancel = () => {
 
 //确定事件
 const confirm = () => {
-  hide(1);
+  if (form.phone.length == 0) {
+    console.log("手机号不能为空");
+    // 手机号输入框动画
+    shareInput()
+    return
+  }
+  validatorPhone(form.phone).then((value) => {
+      if (value) {
+        console.log("手机号校验通过   " + value);
+        hide(1);
+      } else {
+        console.log("手机号校验失败   " + value);
+        // 手机号输入框动画
+        shareInput()
+      }
+    });
 };
+
+//TODO: 摇晃动画
+const shareInput = () => {
+  // 通过id找到组建
+  let phone_input = document.getElementById("phoneID")
+  // 给组建添加class属性为我们自定义的shark，此时就可以摇晃起来了
+  phone_input!.setAttribute("class","shake")
+  // 2秒后要移除class属性，否则下次就不执行shake动画了
+  setTimeout(()=>{phone_input!.removeAttribute("class")},2000);
+}
 
 defineExpose({
   hide,
@@ -122,6 +152,10 @@ defineExpose({
 onMounted(() => {
   // 此刻的props是没有值的，要在show()函数里进行操作
 });
+
+// const phoneInputChange = (item) => {
+//   console.log(item.value)
+// }
 </script>
 
 <style scoped>
@@ -239,4 +273,34 @@ onMounted(() => {
   color:#999;
   font-size:16px;
 }
+
+
+/*.input-div input:invalid{*/
+/*  color: red;*/
+/*  animation: shake 0.2s ease-in-out 0s 2;*/
+/*}*/
+
+/* @Animate 左右摇晃动画 */
+.shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
+@keyframes shake {
+  0%{
+    margin-left: 0;
+  }
+  25%{
+    margin-left: 30px;
+  }
+  50%{
+    margin-left: 0;
+  }
+  75%{
+    margin-left: -30px;
+  }
+  100%{
+    margin-left: 0;
+  }
+}
+
+/*.phoneClass {}*/
 </style>

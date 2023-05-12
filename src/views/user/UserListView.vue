@@ -63,112 +63,12 @@ import { ref } from "vue";
 import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
 import AddUser from "@/views/user/AddUserView.vue";
+import {userListData} from "@/views/user/userListData";
 let currentPage = ref(1); // 当前页
 let pageSize = 4; //一页显示多少条
 let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
 // 数据源
-let tableData = ref([
-  {
-    user_id:"10001",
-    nick_name: '张三',
-    user_name: "ad123",
-    phone: '15167683359',
-    address: 'No. 189, Grove St, Los Angeles',
-    devices: [{
-      index: 1,
-      name: "zw101",
-    },
-      {
-        index: 2,
-        name: "zq007",
-      },
-      {
-        index: 3,
-        name: "zr209",
-      },
-    ]
-  },
-  {
-    user_id: '10008',
-    nick_name: 'Tom',
-    user_name: "bb333",
-    phone: '13866382257',
-    address: 'No. 189, Grove St, Los Angeles',
-    devices: [{
-      index: 1,
-      name: "zw201",
-    },
-      {
-        index: 2,
-        name: "zq207",
-      },
-      {
-        index: 3,
-        name: "zr109",
-      },
-    ]
-  },
-  {
-    user_id: '10016',
-    nick_name: 'Jack',
-    user_name: "ad123",
-    phone: '18058362730',
-    address: 'No. 189, Grove St, Los Angeles',
-    devices: [{
-      index: 1,
-      name: "zw102",
-    },
-      {
-        index: 2,
-        name: "zq003",
-      },
-      {
-        index: 3,
-        name: "zr208",
-      },
-    ]
-  },
-  {
-    user_id: '10025',
-    nick_name: '乔布撕',
-    user_name: "aj668",
-    phone: '13397975566',
-    address: 'No. 189, Grove St, Los Angeles',
-    devices: [{
-      index: 1,
-      name: "zw101",
-    },
-      {
-        index: 2,
-        name: "zq007",
-      },
-      {
-        index: 3,
-        name: "zr209",
-      },
-    ]
-  },
-  {
-    user_id: '10025',
-    nick_name: '武大郎',
-    user_name: "dw668",
-    phone: '13397975566',
-    address: 'No. 189, Grove St, Los Angeles',
-    devices: [{
-      index: 1,
-      name: "zw101",
-    },
-      {
-        index: 2,
-        name: "zq007",
-      },
-      {
-        index: 3,
-        name: "zr209",
-      },
-    ]
-  },
-]);
+let tableData = ref(userListData);
 
 /** 查看用户详情
  *
@@ -186,8 +86,10 @@ const handleDetail = (index: number, row: object) => {
  *  时间：2023/05/08 15:15:18
  */
 const handleDelete = (index: number, row: object) => {
-  console.log("handleDelete~");
-  let nickName = tableData.value[index].nick_name;
+  console.log("handleDelete~当前页："+currentPage.value);
+  const current_index = (currentPage.value - 1)*pageSize + index; //由于分页显示，这里的下标并非数据源里的下标
+  console.log(`currentPage->${currentPage.value} index->${index}  current_index->${current_index}`,);
+  let nickName = tableData.value[current_index].nick_name;
   let vars = {
     component:BindView,
     title:"温馨提醒",
@@ -196,7 +98,7 @@ const handleDelete = (index: number, row: object) => {
   ssjAlert(vars).then((val)=>{
     console.log('弹窗返回数据---'+val);
     if (val == "1") {
-      tableData.value.splice(index, 1);
+      tableData.value.splice(current_index, 1);
     }
   });
 };
@@ -272,6 +174,15 @@ const addUser = () => {
     console.log(`手机号->${json["phone"]}`);
     console.log(`昵称->${json["nick_name"]}`);
     console.log(`单位->${json["company"]}`);
+    let user_add = {
+      user_id: '10099',
+          nick_name: json["nick_name"],
+        user_name: "dw677",
+        phone: json["phone"],
+        company: json["company"],
+        devices: []
+    }
+    tableData.value.push(user_add);
   })
 }
 
