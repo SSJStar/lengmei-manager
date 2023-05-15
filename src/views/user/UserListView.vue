@@ -64,8 +64,10 @@ import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
 import AddUser from "@/views/user/AddUserView.vue";
 import {userListData} from "@/views/user/userListData";
+
+// TODO：配置
 let currentPage = ref(1); // 当前页
-let pageSize = 4; //一页显示多少条
+let pageSize = 10; //一页显示多少条
 let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
 // 数据源
 let tableData = ref(userListData);

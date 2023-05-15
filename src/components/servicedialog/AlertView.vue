@@ -126,7 +126,9 @@ onMounted(() => {
 .tip .bgView .subTitle-label {
   margin-top: 5px;
   font-size: 20px;
-  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: calc(100% - 30px);
   text-align: center;
   color: #666666;
 }

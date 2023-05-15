@@ -181,4 +181,64 @@ export const userListData = ref([
             },
         ]
     },
+    {
+        user_id:"100033",
+        nick_name: '赵大兵',
+        user_name: "ba301",
+        phone: '15167683370',
+        company: '恒生电子科技',
+        devices: [{
+            index: 1,
+            name: "zw101",
+        },
+            {
+                index: 2,
+                name: "zq007",
+            },
+            {
+                index: 3,
+                name: "zr209",
+            },
+        ]
+    },
+    {
+        user_id:"100034",
+        nick_name: '赵二兵',
+        user_name: "ba302",
+        phone: '15167683371',
+        company: '恒生电子科技',
+        devices: [{
+            index: 1,
+            name: "zw101",
+        },
+            {
+                index: 2,
+                name: "zq007",
+            },
+            {
+                index: 3,
+                name: "zr209",
+            },
+        ]
+    },
+    {
+        user_id:"100035",
+        nick_name: '赵三兵',
+        user_name: "ba303",
+        phone: '15167683372',
+        company: '恒生电子科技',
+        devices: [{
+            index: 1,
+            name: "zw101",
+        },
+            {
+                index: 2,
+                name: "zq007",
+            },
+            {
+                index: 3,
+                name: "zr209",
+            },
+        ]
+    },
 ]);
