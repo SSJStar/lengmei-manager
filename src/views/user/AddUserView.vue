@@ -13,6 +13,7 @@
             type="text"
             placeholder=" 请输入手机号"
             v-model="form.phone"
+            @blur="handelOnblur()"
             id="phoneID"
         />
       </div>
@@ -32,8 +33,8 @@
             type="text"
             placeholder=" 请输入工作单位/公司"
             v-model="form.company"
-            v-model:="phoneValue"
         />
+<!--    v-model:="phoneValue"    -->
       </div>
 <!--      <div class="input-div" style="margin-top: 20px;">-->
 <!--        <label style="color:salmon; width: 70%; text-align: left;">请输入正确的手机号</label>-->
@@ -55,6 +56,7 @@ import { validatorPhone } from "@/statics/ssj-validate-rule";
 
 let isShow = ref(false);
 let phoneValue = ref();
+let msg = ref(1)
 // //定义类型 Obj
 // export interface SSJDialogParams {
 //   // [key: string]: string | number;
@@ -99,7 +101,7 @@ const show = () => {
 const hide = (btnIndex: number) => {
   isShow.value = false;
   if (btnIndex === 0) {
-    props.close(btnIndex, "");
+    props.close(btnIndex, null);
   } else if (btnIndex === 1) {
     props.close(btnIndex, form);
   }
@@ -136,6 +138,32 @@ const confirm = () => {
     });
 };
 
+/**
+ * 失去焦点 - 输入框（手机号）
+ *
+ *  作者：小青龙
+ *  时间：2023/05/15 11:43:01
+ *  说明：
+ */
+const handelOnblur = ()=>{
+  console.log("失去焦点");
+  if (form.phone.length == 0) {
+    console.log("手机号不能为空");
+    // 手机号输入框动画
+    shareInput()
+    return
+  }
+  validatorPhone(form.phone).then((value) => {
+    if (value) {
+      console.log("手机号校验通过   " + value);
+    } else {
+      console.log("手机号校验失败   " + value);
+      // 手机号输入框动画
+      shareInput()
+    }
+  });
+}
+
 //TODO: 摇晃动画
 const shareInput = () => {
   // 通过id找到组建
@@ -158,16 +186,20 @@ onMounted(() => {
   // vm.$watch('counter', function(nval, oval) {
   //   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
   // });
-//   watch : {
-//     phoneValue.value(newValue,oldValue) {
-//
-//     }
-//   } computed:{
-//
-//   };
-// });
-  watch(phoneValue, (newValue, oldValue) => {
 
+// @Watch("form.phone", {immediate:true,deep:true})
+//   onStartTimeChange(newValue, oldValue) {
+//   console.log("aaa");
+//   console.log(`${oldValue} 变化-> ${newValue}`)
+// };
+// 当监听一整个对象，可以这么写：watch(form, (newValue, oldValue) => {))
+// 当监听json的某个属性，可以这么写：watch(()=>form.phone, (newValue, oldValue) => {))
+  watch(()=>form.phone, (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      console.log("111");
+      // console.log(`${oldValue} 变化-> ${newValue}`)
+      console.log(`${oldValue} 变化-> ${newValue}`)
+    }
   });
 })
 

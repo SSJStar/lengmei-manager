@@ -17,32 +17,34 @@ const routes: Array<RouteRecordRaw> = [
     path: "/layoutView",
     component: () => import(/* webpackChunkName: "about" */ '../views/LayoutView.vue'),
     children: [
+      //默认选中
       {
-        path: "",
+        path: "/",
+        name: "home",
         component: () => import("../views/user/UserListView.vue"),
       },
       // 用户列表
       {
         path: "userListView",
-        name: "userListView",
+        name: "1",
         component: () => import("../views/user/UserListView.vue"),
       },
       // 用户详情
       {
         path: "userDetailView",
-        name: "userDetailView",
+        // name: "userDetailView",
         component: () => import("../views/user/UserDetailView.vue"),
       },
       // 设备列表
       {
         path: "deviceListView",
-        name: "deviceListView",
+        name: "2",
         component: () => import("../views/device/DeviceListView.vue"),
       },
       // 设备详情
       {
         path: "deviceDetailView",
-        name: "deviceDetailView",
+        // name: "deviceDetailView",
         component: () => import("../views/device/DeviceDetailView.vue"),
       },
     ],

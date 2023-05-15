@@ -141,4 +141,44 @@ export const userListData = ref([
             },
         ]
     },
+    {
+        user_id:"100030",
+        nick_name: '张邱芬',
+        user_name: "ba111",
+        phone: '15167683360',
+        company: '网易',
+        devices: [{
+            index: 1,
+            name: "zw101",
+        },
+            {
+                index: 2,
+                name: "zq007",
+            },
+            {
+                index: 3,
+                name: "zr209",
+            },
+        ]
+    },
+    {
+        user_id:"100031",
+        nick_name: '张秋丽',
+        user_name: "ba122",
+        phone: '15167683361',
+        company: '恒生电子科技',
+        devices: [{
+            index: 1,
+            name: "zw101",
+        },
+            {
+                index: 2,
+                name: "zq007",
+            },
+            {
+                index: 3,
+                name: "zr209",
+            },
+        ]
+    },
 ]);

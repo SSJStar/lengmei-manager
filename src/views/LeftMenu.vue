@@ -124,12 +124,22 @@ import { Location, Setting } from "@element-plus/icons-vue"; //引入图标
 import { onMounted, ref } from "vue";
 // import { staticVars } from "../GitHub/ ssj-vue-project/src/statics/global.js";
 import { staticVars } from "@/statics/global";
+import {useRoute, useRouter} from "vue-router";
 onMounted(() => {
-  console.log("333333:");
+  const router = useRoute();
+
+  console.log("3333" + router.name);
+  if (router.name === "home") {
+    sel.value = "1";
+  }else{
+    sel.value = router.name;
+  }
   console.log(staticVars.BACKGROUNBD_COLOR);
 });
 
-const sel = "1";
+//TODO: 选中的菜单
+const sel = ref("1");
+
 // 折叠还是展开
 let isCollapse = ref(false);
 

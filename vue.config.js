@@ -3,8 +3,8 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     proxy: {
-      "/api": {
-        target: "http://hvac.365env.com/rft/", //接口域名
+      '/api': {
+        target: 'http://hvac.365env.com/', //接口域名
         changeOrigin: true, //是否跨域
         ws: true, //是否代理 websockets
         secure: true, //是否https接口
