@@ -43,7 +43,7 @@
       </el-table-column>
 
       <!--  第四列  -->
-      <el-table-column label="绑定/解绑">
+      <el-table-column label="绑定/解绑" width="300px">
         <template #default="scope">
           <el-button size="small" @click="handleBind(scope.$index, scope.row)"
           >绑定使用者</el-button
@@ -64,6 +64,15 @@
             <el-icon><timer /></el-icon>
             <span style="margin-left: 10px;">{{ getState(scope.row.state) }}</span>
           </div>
+        </template>
+      </el-table-column>
+
+      <!--  第六列  -->
+      <el-table-column label="删除" align="center">
+        <template #default="scope">
+          <el-button size="small" @click="handleDelete(scope.$index, scope.row)"
+          >X</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -92,7 +101,7 @@
 
 <script lang="ts" setup>
 import {Burger, Timer} from '@element-plus/icons-vue'
-import {ssjTip} from "@/components/servicedialog/ssj-dialog";
+import {ssjAlert, ssjTip} from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue"; //弹窗-子视图
 import BindView from "@/views/device/BindSelectedView.vue";
 import router from "@/router";
@@ -128,7 +137,8 @@ const handleDetail = () => {
 router.push("/layoutView/deviceDetailView")
 };
 
-/** 绑定
+/**
+ * 绑定
  *
  *  作者：小青龙
  *  时间：2023/05/06 10:09:00
@@ -157,7 +167,8 @@ const handleBind = (index: number, row: User) => {
   })
 }
 
-/** 解绑
+/**
+ * 解绑
  *
  *  作者：小青龙
  *  时间：2023/05/06 10:09:23
@@ -175,7 +186,8 @@ const handleUnBind = (index: number, row: User) => {
   })
 }
 
-/** 添加设备 - 点击
+/**
+ * 添加设备 - 点击
  *
  *  作者：小青龙
  *  时间：2023/05/05 15:06:11
@@ -248,6 +260,30 @@ const handelPageChange = (val: number) =>{
   console.log("当前页1---" + currentPage.value);
   console.log("当前页2---" + val);
   currentPage.value = val;
+};
+
+/**
+ * 删除这条设备
+ *
+ *  作者：小青龙
+ *  时间：2023/05/08 15:15:18
+ */
+const handleDelete = (index: number, row: object) => {
+  console.log("handleDelete~当前页："+currentPage.value);
+  const current_index = (currentPage.value - 1)*pageSize + index; //由于分页显示，这里的下标并非数据源里的下标
+  console.log(`currentPage->${currentPage.value} index->${index}  current_index->${current_index}`,);
+  let nickName = tableData.value[current_index].device_type;
+  let vars = {
+    component:BindView,
+    title:"温馨提醒",
+    subTitle:`一旦删除，设备数据将不可恢复，确定删除${nickName}吗？`
+  }
+  ssjAlert(vars).then((val)=>{
+    console.log('弹窗返回数据---'+val);
+    if (val == "1") {
+      tableData.value.splice(current_index, 1);
+    }
+  });
 };
 
 // TODO: 页面加载

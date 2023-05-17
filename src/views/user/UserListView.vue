@@ -1,5 +1,24 @@
 <template>
   <div class="deviceListDiv">
+    <!--  搜索框  -->
+<!--    <el-input class="searchInput" v-model="keyWords" clearable @input="search" @clear="unSearch"></el-input>-->
+    <!--        class="w-50 m-2"-->
+    <el-input
+        v-model="keyWords"
+      class="searchInput"
+        placeholder="可查询设备名称"
+        :prefix-icon="Search"
+    />
+<!--    <el-input-->
+<!--        v-model="keyWords"-->
+<!--        placeholder="可查询设备名称"-->
+<!--        clearable-->
+<!--        size="small"-->
+<!--        class="search-input1"-->
+<!--        @keyup.enter.native="search"-->
+<!--        suffix-icon="el-icon-search"-->
+<!--    />-->
+    <!--  列表  -->
     <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" style="width: 100%">
     <el-table-column prop="nick_name" label="用户名" width="180" >
       <template #default="scope">
@@ -64,15 +83,37 @@ import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
 import AddUser from "@/views/user/AddUserView.vue";
 import {userListData} from "@/views/user/userListData";
-
+import {Search} from "@element-plus/icons-vue";
+// import { Calendar, Search } from '@element-plus/icons-vue'
 // TODO：配置
 let currentPage = ref(1); // 当前页
 let pageSize = 10; //一页显示多少条
 let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
 // 数据源
 let tableData = ref(userListData);
+// 搜索关键词
+let keyWords = ref("");
+/**
+ * 搜索
+ *
+ *  作者：小青龙
+ *  时间：2023/05/17 11:28:35
+ */
+let search = ()=>{
+  console.log("搜索内容：");
+}
+/**
+ * 取消搜索
+ *
+ *  作者：小青龙
+ *  时间：2023/05/17 11:28:35
+ */
+let unSearch = ()=>{
+  console.log("取消搜索！");
+}
 
-/** 查看用户详情
+/**
+ * 查看用户详情
  *
  *  作者：小青龙
  *  时间：2023/05/08 15:15:18
@@ -82,7 +123,8 @@ const handleDetail = (index: number, row: object) => {
   router.push("/layoutView/userDetailView")
 };
 
-/** 删除这条用户信息
+/**
+ * 删除这条用户信息
  *
  *  作者：小青龙
  *  时间：2023/05/08 15:15:18
@@ -105,7 +147,8 @@ const handleDelete = (index: number, row: object) => {
   });
 };
 
-/** 绑定
+/**
+ * 绑定
  *
  *  作者：小青龙
  *  时间：2023/05/08 15:16:08
@@ -136,7 +179,8 @@ const handleBind = (index: number, row: object) => {
   })
 }
 
-/** 解绑
+/**
+ * 解绑
  *
  *  作者：小青龙
  *  时间：2023/05/08 15:18:26
@@ -154,7 +198,8 @@ const handleUnBind = (index: number, row: object) => {
   })
 }
 
-/** 添加用户 - 点击
+/**
+ * 添加用户 - 点击
  *
  *  作者：小青龙
  *  时间：2023/05/05 15:06:11
@@ -188,7 +233,8 @@ const addUser = () => {
   })
 }
 
-/** 翻页 - 事件
+/**
+ * 翻页 - 事件
  *
  *  作者：小青龙
  *  时间：2023/05/11 11:11:44
