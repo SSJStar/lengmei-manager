@@ -3,12 +3,16 @@
     <!--  搜索框  -->
 <!--    <el-input class="searchInput" v-model="keyWords" clearable @input="search" @clear="unSearch"></el-input>-->
     <!--        class="w-50 m-2"-->
-    <el-input
-        v-model="keyWords"
-      class="searchInput"
-        placeholder="可查询设备名称"
-        :prefix-icon="Search"
-    />
+    <div disabled="flex">
+      <el-input
+          v-model="keyWords"
+          class="searchInput"
+          placeholder="可查询设备名称"
+          :prefix-icon="Search"
+          @cancel="endEditing"
+      />
+      <button style="margin-left: 10px;height:28px">查询</button>
+    </div>
 <!--    <el-input-->
 <!--        v-model="keyWords"-->
 <!--        placeholder="可查询设备名称"-->
@@ -244,6 +248,10 @@ const handelPageChange = (val: number) =>{
   console.log("当前页2---" + val);
   currentPage.value = val;
 };
+
+let endEditing = ()=> {
+
+};
 </script>
 
 <style scoped>
@@ -268,5 +276,8 @@ const handelPageChange = (val: number) =>{
   border-radius: 6px;
   /*box-shadow: none;*/
   border: none;/* 去掉阴影 */
+}
+.searchInput {
+  width: calc(80% - 50px);
 }
 </style>
