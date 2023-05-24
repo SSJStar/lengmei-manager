@@ -241,4 +241,24 @@ export const userListData = [
             },
         ]
     },
+    {
+        user_id: '10036',
+        nick_name: '武大郎郎',
+        user_name: "dw669",
+        phone: '13397975569',
+        company: 'No. 189, Grove St, Los Angeles',
+        devices: [{
+            index: 1,
+            name: "zw101",
+        },
+            {
+                index: 2,
+                name: "zq007",
+            },
+            {
+                index: 3,
+                name: "zr209",
+            },
+        ]
+    },
 ];

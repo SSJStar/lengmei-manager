@@ -26,9 +26,10 @@
     <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" style="width: 100%">
     <el-table-column prop="nick_name" label="用户名" width="180" >
       <template #default="scope">
-        <span size="small" @click="handleDetail(scope.$index, scope.row)"
-        >{{scope.row.nick_name}}</span
-        >
+<!--        <span size="small" @click="handleDetail(scope.$index, scope.row)"-->
+<!--        >{{scope.row.nick_name}}</span-->
+<!--        >-->
+        <RickColorLabel :text="scope.row.nick_name" :replace-text="replaceText" replace-color="#90EE90" size="small" @click="handleDetail(scope.$index, scope.row)"></RickColorLabel>
       </template>
     </el-table-column>
     <el-table-column prop="user_name" label="账号" width="180" >
@@ -75,6 +76,7 @@
     <div class="addUserDiv">
       <button @click="addUser">添加用户</button>
     </div>
+<!--    <RickColorLabel text="太阳当空照" replace-text="空" replace-color="#8B4513"></RickColorLabel>-->
   </div>
 </template>
 
@@ -88,7 +90,8 @@ import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
 import AddUser from "@/views/user/AddUserView.vue";
 import { userListData } from "@/views/user/userListData";
 import { Search } from "@element-plus/icons-vue";
-import { fuzzySearch,preciseSearch } from "@/statics/ssj-method-extension"; //模糊搜索
+import { fuzzySearch,preciseSearch } from "@/statics/ssj-method-extension";
+import RickColorLabel from "@/components/RickColorLabel.vue"; //模糊搜索
 // import { Calendar, Search } from '@element-plus/icons-vue'
 // TODO：配置
 let currentPage = ref(1); // 当前页
@@ -98,6 +101,8 @@ let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7�
 let tableData:any = ref(userListData);
 // 搜索关键词
 let keyWords = ref("");
+//
+let replaceText = ref("");
 
 /**
  * 查看用户详情
@@ -241,7 +246,11 @@ const handelPageChange = (val: number) =>{
 let handleCheck = ()=>{
   console.log("查询内容:" + keyWords.value);
   if (keyWords.value === "") {
-    // tableData.value = userListData;
+    tableData.value = userListData;
+    // 这里需要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
+    setTimeout(()=>{
+      replaceText.value = "";
+    },100)
     return
   }
   // searchKeywordsFromData2(keyWords.value).then(res=>{
@@ -252,6 +261,11 @@ let handleCheck = ()=>{
   fuzzySearch(userListData,keyWords.value,"nick_name").then((res)=>{
     console.log("模糊查询结果："+JSON.stringify(res));
     tableData.value = res;
+    //将搜索关键词keyWords赋值给replaceText，这样RichColorLabel就会刷新了
+    // 这里需要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
+    setTimeout(()=>{
+      replaceText.value = keyWords.value;
+    },20)
   });
 };
 
@@ -265,6 +279,11 @@ let handleCheck = ()=>{
 let handelClear = ()=> {
   console.log("一键清空~")
   tableData.value = userListData;
+  //将搜索关键词keyWords赋值给replaceText，这样RichColorLabel就会刷新了
+  // 这里要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
+  setTimeout(()=>{
+    replaceText.value = "";
+  },100)
 };
 </script>
 
