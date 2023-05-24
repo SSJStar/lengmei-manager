@@ -99,7 +99,16 @@ const listJson = {
       title: "设备管理",
       page: "/layoutView/deviceListView",
       childrens: [],
-    },]
+    },
+    {
+      index: "3",
+      parent_id: "0",
+      iconName: require("/src/assets/menu/icon-menu-shebei.png"),
+      title: "测试",
+      page: "/layoutView/testView",
+      childrens: [],
+    },
+  ]
 };
 
 

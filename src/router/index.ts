@@ -47,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
         // name: "deviceDetailView",
         component: () => import("../views/device/DeviceDetailView.vue"),
       },
+      // 测试
+      {
+        path: "testView",
+        component: () => import("../views/SSJTest.vue"),
+      },
     ],
   },
 ]

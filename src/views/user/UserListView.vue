@@ -6,7 +6,7 @@
       <el-input
           v-model="keyWords"
           class="searchInput"
-          placeholder="可查询设备名称"
+          placeholder="可查询用户名称"
           :prefix-icon="Search"
           clearable
           @clear="handelClear"
@@ -29,7 +29,7 @@
 <!--        <span size="small" @click="handleDetail(scope.$index, scope.row)"-->
 <!--        >{{scope.row.nick_name}}</span-->
 <!--        >-->
-        <RickColorLabel :text="scope.row.nick_name" :replace-text="replaceText" replace-color="#90EE90" size="small" @click="handleDetail(scope.$index, scope.row)"></RickColorLabel>
+        <RickColorLabel :refresh-count="richLabelRefresh" :text="scope.row.nick_name" :replace-text="replaceText" replace-color="#90EE90" size="small" @click="handleDetail(scope.$index, scope.row)"></RickColorLabel>
       </template>
     </el-table-column>
     <el-table-column prop="user_name" label="账号" width="180" >
@@ -84,7 +84,7 @@
 import router from "@/router";
 import BindView from "@/views/device/BindSelectedView.vue";
 import { ssjTip } from "@/components/servicedialog/ssj-dialog";
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
 import AddUser from "@/views/user/AddUserView.vue";
@@ -95,14 +95,33 @@ import RickColorLabel from "@/components/RickColorLabel.vue"; //模糊搜索
 // import { Calendar, Search } from '@element-plus/icons-vue'
 // TODO：配置
 let currentPage = ref(1); // 当前页
+
 let pageSize = 10; //一页显示多少条
+
 let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
-// 数据源
-let tableData:any = ref(userListData);
+
+// TODO：从配置文件读取假数据
+let dataSoure:any = ref(userListData);
+
+//dd唯一的作用就是给tableData初始化内容，如果直接用dataSoure来初始化，会导致dataSoure的值受到tableData值的影响
+let dd = userListData;
+
+// 展示出来的数据源（包括查询结果的展示、所有数据的展示）
+let tableData:any = ref(dd);
+
 // 搜索关键词
 let keyWords = ref("");
-//
+
+// 传给RichColorLabel的高亮内容，点击查询按钮，会把keyWords赋值给replaceText，
+// replaceText内容发生变化，richcolorlabel组件就会自动刷新
 let replaceText = ref("");
+
+// 控制richColorLabel刷新
+let richLabelRefresh = ref(0);
+
+onMounted(()=>{
+  console.log("119dataSoure个数："+dataSoure.value.length)
+});
 
 /**
  * 查看用户详情
@@ -135,6 +154,14 @@ const handleDelete = (index: number, row: object) => {
     console.log('弹窗返回数据---'+val);
     if (val == "1") {
       tableData.value.splice(current_index, 1);
+      // current仅代表查询结果里的顺序，dataSoure要删除这条内容的话，需要先找到这条数据在dataSoure里真正的索引位置
+      dataSoure.value.forEach((item,aindex)=>{
+        if (item.user_id === tableData.value[current_index].user_id){
+          console.log("找到在dataSour的位置："+aindex + "   a:"+item.user_id+" b:"+tableData.value[current_index].user_id);
+          dataSoure.value.splice(index, 1);
+        }
+      });
+      console.log("150dataSoure个数："+dataSoure.value.length+" current_index："+current_index);
     }
   });
 };
@@ -222,6 +249,8 @@ const addUser = () => {
         devices: []
     }
     tableData.value.push(user_add);
+    dataSoure.value.push(user_add);
+    console.log("dataSoure个数："+dataSoure.value.length)
   })
 }
 
@@ -232,9 +261,12 @@ const addUser = () => {
  *  时间：2023/05/11 11:11:44
  */
 const handelPageChange = (val: number) =>{
-  console.log("当前页1---" + currentPage.value);
-  console.log("当前页2---" + val);
   currentPage.value = val;
+  // 这里需要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
+  setTimeout(()=>{
+    replaceText.value = keyWords.value;
+    richLabelRefresh.value ++;
+  },20)
 };
 
 /**
@@ -246,21 +278,19 @@ const handelPageChange = (val: number) =>{
 let handleCheck = ()=>{
   console.log("查询内容:" + keyWords.value);
   if (keyWords.value === "") {
-    tableData.value = userListData;
+    tableData.value = dataSoure.value;
     // 这里需要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
     setTimeout(()=>{
       replaceText.value = "";
-    },100)
+    },20)
     return
   }
-  // searchKeywordsFromData2(keyWords.value).then(res=>{
-  //   console.log("tableData结果："+JSON.stringify(tableData));
-  //   console.log("查询结果："+JSON.stringify(res));
-  //   tableData.value = res;
-  // });
-  fuzzySearch(userListData,keyWords.value,"nick_name").then((res)=>{
+  console.log("278dataSoure个数："+dataSoure.value.length)
+  fuzzySearch(dataSoure.value,keyWords.value,"nick_name").then((res)=>{
     console.log("模糊查询结果："+JSON.stringify(res));
+    console.log("281dataSoure个数："+dataSoure.value.length)
     tableData.value = res;
+    console.log("283dataSoure个数："+dataSoure.value.length)
     //将搜索关键词keyWords赋值给replaceText，这样RichColorLabel就会刷新了
     // 这里需要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
     setTimeout(()=>{
@@ -278,12 +308,12 @@ let handleCheck = ()=>{
  */
 let handelClear = ()=> {
   console.log("一键清空~")
-  tableData.value = userListData;
+  tableData.value = dataSoure.value;
   //将搜索关键词keyWords赋值给replaceText，这样RichColorLabel就会刷新了
   // 这里要加延迟，否则会出现错误：刷新的条数 = 上一次查询结果的条数
   setTimeout(()=>{
     replaceText.value = "";
-  },100)
+  },20)
 };
 </script>
 

@@ -166,9 +166,9 @@ const handelOnblur = ()=>{
 
 //TODO: 摇晃动画
 const shareInput = () => {
-  // 通过id找到组建
+  // 通过id找到组件
   let phone_input = document.getElementById("phoneID")
-  // 给组建添加class属性为我们自定义的shark，此时就可以摇晃起来了
+  // 给组件添加class属性为我们自定义的shark，此时就可以摇晃起来了
   phone_input!.setAttribute("class","shake")
   // 2秒后要移除class属性，否则下次就不执行shake动画了
   setTimeout(()=>{phone_input!.removeAttribute("class")},2000);

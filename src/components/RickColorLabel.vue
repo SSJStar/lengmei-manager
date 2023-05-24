@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 260px;display: flex" v-html="showText"></div>
+  <div style="display: flex" v-html="showText"></div>
 </template>
 
 <script lang="ts" setup>
@@ -10,6 +10,7 @@ const props = defineProps<{
   text: string;
   replaceText: string;
   replaceColor:string;
+  refreshCount:number;
 }>();
 
 
