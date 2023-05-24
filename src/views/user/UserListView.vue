@@ -1,7 +1,6 @@
 <template>
   <div class="deviceListDiv">
     <!--  搜索框  -->
-<!--    <el-input class="searchInput" v-model="keyWords" clearable @input="search" @clear="unSearch"></el-input>-->
     <!--        class="w-50 m-2"-->
     <div disabled="flex">
       <el-input
@@ -9,9 +8,10 @@
           class="searchInput"
           placeholder="可查询设备名称"
           :prefix-icon="Search"
-          @cancel="endEditing"
+          clearable
+          @clear="handelClear"
       />
-      <button style="margin-left: 10px;height:28px">查询</button>
+      <button style="margin-left: 10px;height:28px" @click="handleCheck">查询</button>
     </div>
 <!--    <el-input-->
 <!--        v-model="keyWords"-->
@@ -81,40 +81,23 @@
 <script lang="ts" setup>
 import router from "@/router";
 import BindView from "@/views/device/BindSelectedView.vue";
-import {ssjTip} from "@/components/servicedialog/ssj-dialog";
+import { ssjTip } from "@/components/servicedialog/ssj-dialog";
 import { ref } from "vue";
 import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
 import Tip from "@/components/servicedialog/ssj-dialog-child.vue";
 import AddUser from "@/views/user/AddUserView.vue";
-import {userListData} from "@/views/user/userListData";
-import {Search} from "@element-plus/icons-vue";
+import { userListData } from "@/views/user/userListData";
+import { Search } from "@element-plus/icons-vue";
+import { fuzzySearch,preciseSearch } from "@/statics/ssj-method-extension"; //模糊搜索
 // import { Calendar, Search } from '@element-plus/icons-vue'
 // TODO：配置
 let currentPage = ref(1); // 当前页
 let pageSize = 10; //一页显示多少条
 let paperCount = 3; //第几页时开始显示省略号（比如共50页，第7页就显示省略号）
 // 数据源
-let tableData = ref(userListData);
+let tableData:any = ref(userListData);
 // 搜索关键词
 let keyWords = ref("");
-/**
- * 搜索
- *
- *  作者：小青龙
- *  时间：2023/05/17 11:28:35
- */
-let search = ()=>{
-  console.log("搜索内容：");
-}
-/**
- * 取消搜索
- *
- *  作者：小青龙
- *  时间：2023/05/17 11:28:35
- */
-let unSearch = ()=>{
-  console.log("取消搜索！");
-}
 
 /**
  * 查看用户详情
@@ -249,8 +232,39 @@ const handelPageChange = (val: number) =>{
   currentPage.value = val;
 };
 
-let endEditing = ()=> {
+/**
+ * 查询
+ *  作者：小青龙
+ *  时间：2023/05/23 17:29:54
+ *  说明：
+ */
+let handleCheck = ()=>{
+  console.log("查询内容:" + keyWords.value);
+  if (keyWords.value === "") {
+    // tableData.value = userListData;
+    return
+  }
+  // searchKeywordsFromData2(keyWords.value).then(res=>{
+  //   console.log("tableData结果："+JSON.stringify(tableData));
+  //   console.log("查询结果："+JSON.stringify(res));
+  //   tableData.value = res;
+  // });
+  fuzzySearch(userListData,keyWords.value,"nick_name").then((res)=>{
+    console.log("模糊查询结果："+JSON.stringify(res));
+    tableData.value = res;
+  });
+};
 
+/**
+ * 一键清空 - 搜索内容
+ *
+ *  作者：小青龙
+ *  时间：2023/05/24 10:54:31
+ *  说明：点击输入框右边的"x"，清空搜索内容，并且恢复原列表数据
+ */
+let handelClear = ()=> {
+  console.log("一键清空~")
+  tableData.value = userListData;
 };
 </script>
 

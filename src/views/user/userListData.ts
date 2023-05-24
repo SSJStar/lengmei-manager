@@ -1,6 +1,6 @@
 import {ref} from "vue";
 
-export const userListData = ref([
+export const userListData = [
     {
         user_id:"10001",
         nick_name: '张三',
@@ -241,4 +241,4 @@ export const userListData = ref([
             },
         ]
     },
-]);
+];
