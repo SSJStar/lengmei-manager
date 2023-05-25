@@ -1,18 +1,9 @@
 <template>
   <div class="tip" v-if="isShow">
     <div class="bgView">
+      <!--   内容   -->
       <label class="title">{{ titleValue }}</label>
-      <!--    <el-checkbox v-model="checked1" disabled>Disabled</el-checkbox>-->
-      <!--    <el-checkbox v-model="checked2">Not disabled</el-checkbox>-->
       <br />
-      <div class="listDiv">
-        <div v-for="(item,index) in listValue" :key="index">
-          {{ item.name }}<input class="checkBox" :id="index" type="checkbox" name="item.name" value="item.index" v-model="item.selectedState" @change="handelChange(index)" />
-        </div>
-<!--          李四1<input class="checkBox" type="checkbox" name="lisi" value="1" v-model="selecteds" />-->
-      </div>
-      <br />
-      <!--  绑定/解绑  -->
       <div class="actionView">
         <!--    分割线    -->
         <div class="row-line"></div>
@@ -25,17 +16,13 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref} from "vue";
-import {User} from "@element-plus/icons-vue";
-let selecteds:any = [];
+import { ref } from "vue";
 
 // isShow 控制当前view的显示/隐藏
 let isShow = ref(false);
 
 // 标题
 let titleValue = ref("");
-// 用户列表数据
-let listValue = ref([]);
 
 // 定义props属性
 const props = defineProps<{
@@ -43,92 +30,9 @@ const props = defineProps<{
   params: any;
 }>();
 
-interface Item {
-  id: string
-  name: string
-  selectedState: number
-}
-
-// let jsonData = [
-//   {
-//     id: "10001",
-//     name: "张三",
-//     phone: "13396551781",
-//     selectedState: 0,
-//     isChecked: false,
-//   },
-//   {
-//     id: "10002",
-//     name: "里斯",
-//     phone: "13896883359",
-//     selectedState: 0,
-//     isChecked: false,
-//   },
-//   {
-//     id: "10003",
-//     name: "王武",
-//     phone: "15167661836",
-//     selectedState: 0,
-//     isChecked: false,
-//   }
-// ];
-
-// jsonData[0].isChecked="2";
-// onMounted(()=> {
-//   jsonData.forEach(v => {
-//     v.isChecked = '';
-//   })
-// });
-
-/** numnber -> bool
- *
- *  作者：小青龙
- *  时间：2023/05/06 11:51:22
- */
-const handelChange = (index: number)=> {
-  console.log(selecteds.value);
-  console.log(index);
-  if(listValue.value[index]['selectedState']){
-    console.log("选中~"+index)
-  //   添加到selecteds
-    selecteds.push(listValue.value[index])
-  }else {
-    console.log("没选中~"+index)
-    //   从selecteds数组里移除
-    for (let i in selecteds) {
-      if (selecteds[i] == listValue.value[index]) {
-        selecteds.splice(i,1);
-      }
-    }
-  }
-};
 const show = () => {
   isShow.value = true;
   titleValue.value = props.params["title"];
-  selecteds.length = 0; //清空数组
-  let list_value: [any] = props.params["list"];
-  let list_value2:any = [];
-  // 遍历json数组，重新组装为Item数组
-  if (list_value instanceof Array){
-    list_value.forEach(item => {
-      Object.assign(item,{selectedState: 0})
-      // list_value2.push(Object.assign(item,{selectedState: 0}))
-      item["selectedState"] = 0
-      let model: Item = {
-        id: item['user_id'],
-        name: item['name'],
-        selectedState: 0,
-      }
-      list_value2.push(model);
-    });
-  }
-
-  listValue.value = list_value2;
-  console.log("selecteds  ",selecteds)
-  // titleValue.value = props.params["title"];
-  // subTitleValue.value = props.params["subTitle"];
-  // console.log(`titleValue - ${titleValue}  subTitleValue - ${subTitleValue}`)
-  // console.log(props.params);
 };
 /**
  * 隐藏当前弹窗组件
@@ -143,17 +47,8 @@ const hide = (btnIndex: number) => {
   if (btnIndex === 0) {
     props.close(btnIndex, "");
   } else if (btnIndex === 1) {
-    props.close(btnIndex, selecteds);
+    props.close(btnIndex, "");
   }
-  // 打印绑定了哪些用户
-  selecteds.forEach((a: { name: string; }) => {
-    console.log("绑定name~"+a.name);
-  });
-  //   取消所有选中(恢复默认状态)
-  listValue.value.forEach(a => {
-    (a as Item)['selectedState'] = 0
-  });
-  listValue.value = []
 };
 
 // 取消事件
@@ -171,15 +66,6 @@ defineExpose({
   show,
 });
 
-/** 绑定- 点击
- *
- *  作者：小青龙
- *  时间：2023/05/05 17:20:24
- */
-const bindAction = ()=> {
-  // console.log("")
-  alert("绑定事件还没写！");
-};
 </script>
 
 <style scoped>
@@ -251,14 +137,5 @@ const bindAction = ()=> {
   text-align: center;
   /*background-color: #42b983;*/
   font-size: 20px;
-}
-
-.listDiv {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-/* 复选框样式 */
-.listDiv .checkBox {
-  float: right;
 }
 </style>
