@@ -9,6 +9,7 @@
           :prefix-icon="Search"
           clearable
           @clear="handelClear"
+          @input="inputChange"
       />
       <button style="margin-left: 10px;height:28px" @click="handleCheck">查询</button>
     </div>
@@ -73,7 +74,7 @@
         style="float: right"
     />
     <!-- 添加用户 -->
-    <div class="addUserDiv">
+    <div class="addUserDiv" v-show="isShowAddUserDiv">
       <button @click="addUser">添加用户</button>
     </div>
 <!--    <RickColorLabel text="太阳当空照" replace-text="空" replace-color="#8B4513"></RickColorLabel>-->
@@ -109,6 +110,8 @@ let tableData:any = ref(dd);
 // v-model：搜索关键词
 let keyWords = ref("");
 
+// 是否展示"添加用户" ，搜索状态下需要隐藏此按钮
+let isShowAddUserDiv = ref(true);
 /**
  * TODO:为什么要用两个变量控制组件的刷新（replaceText、pageTurningRefresh）
  * 因为：
@@ -268,6 +271,22 @@ const handelPageChange = (val: number) =>{
 };
 
 /**
+ * 搜索框内容发生变化
+ *
+ *  作者：小青龙
+ *  时间：2023/05/31 11:16:33
+ *  说明：
+ */
+const inputChange = ()=>{
+  // console.log("内容发生变化："+keyWords.value);
+  // 内容发生变化，搜索框内容删除完的时候，也需要调用一次handelClear方法。
+  if (keyWords.value.length === 0) {
+    console.log("删完了？tableData: " + tableData.value.length);
+    handelClear();
+  }
+}
+
+/**
  * 查询
  *  作者：小青龙
  *  时间：2023/05/23 17:29:54
@@ -283,6 +302,10 @@ let handleCheck = ()=>{
     },20)
     return
   }
+  // 隐藏"添加用户"按钮
+  isShowAddUserDiv.value = false;
+
+  // 模糊查询
   fuzzySearch(dataSoure.value,keyWords.value,"nick_name").then((res)=>{
     console.log("模糊查询结果："+JSON.stringify(res));
     tableData.value = res;
@@ -309,6 +332,9 @@ let handelClear = ()=> {
   setTimeout(()=>{
     replaceText.value = "";
   },20)
+
+  // 显示"添加用户"按钮
+  isShowAddUserDiv.value = true;
 };
 </script>
 

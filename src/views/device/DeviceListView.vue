@@ -10,6 +10,7 @@
           :prefix-icon="Search"
           clearable
           @clear="handelClear"
+          @input="inputChange"
       />
       <button style="margin-left: 10px;height:28px" @click="handleCheck">查询</button>
     </div>
@@ -104,7 +105,7 @@
         style="float: right"
     />
     <!-- 添加设备 -->
-    <div class="addDivceDiv">
+    <div class="addDivceDiv" v-show="isShowAddDeviceDiv">
       <button @click="addDecice">添加设备</button>
     </div>
   </div>
@@ -147,6 +148,9 @@ let tableData:any = ref(dd);
 
 // v-model：搜索关键词
 let keyWords = ref("");
+
+// 是否展示"添加用户" ，搜索状态下需要隐藏此按钮
+let isShowAddDeviceDiv = ref(true);
 
 /**
  * TODO:为什么要用两个变量控制组件的刷新（replaceText、pageTurningRefresh）
@@ -297,7 +301,27 @@ const handelPageChange = (val: number) =>{
   console.log("当前页1---" + currentPage.value);
   console.log("当前页2---" + val);
   currentPage.value = val;
+  replaceText.value = keyWords.value;
+  setTimeout(()=>{
+    pageTurningRefresh.value ++;
+  },20)
 };
+
+/**
+ * 搜索框内容发生变化
+ *
+ *  作者：小青龙
+ *  时间：2023/05/31 11:16:33
+ *  说明：
+ */
+const inputChange = ()=>{
+  // console.log("内容发生变化："+keyWords.value);
+  // 内容发生变化，搜索框内容删除完的时候，也需要调用一次handelClear方法。
+  if (keyWords.value.length === 0) {
+    console.log("删完了？tableData: " + tableData.value.length);
+    handelClear();
+  }
+}
 
 /**
  * 查询
@@ -315,6 +339,10 @@ let handleCheck = ()=>{
     },20)
     return
   }
+  // 隐藏"添加设备"
+  isShowAddDeviceDiv.value = false;
+
+  // 模糊搜索
   fuzzySearch(dataSoure.value,keyWords.value,"device_type").then((res)=>{
     console.log("模糊查询结果："+JSON.stringify(res));
     tableData.value = res;
@@ -341,6 +369,8 @@ let handelClear = ()=> {
   setTimeout(()=>{
     replaceText.value = "";
   },20)
+  // 隐藏"添加设备"
+  isShowAddDeviceDiv.value = true;
 };
 
 /**
