@@ -16,6 +16,7 @@
 
     <!--  列表  -->
     <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" style="width: 100%">
+<!--    <el-table :data="elTableData" style="width: 100%">-->
       <!--  第一列  -->
     <el-table-column prop="nick_name" label="用户名" width="180" >
       <template #default="scope">
@@ -85,13 +86,14 @@
 import router from "@/router";
 import BindView from "@/views/device/BindSelectedView.vue";
 import { ssjTip } from "@/components/servicedialog/ssj-dialog";
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import { ssjAlert } from "@/components/servicedialog/ssj-dialog";
 import AddUser from "@/views/user/AddUserView.vue";
 import { userListData } from "@/views/user/userListData";
 import { Search } from "@element-plus/icons-vue";
 import { fuzzySearch } from "@/statics/ssj-method-extension";
-import RickColorLabel from "@/components/RickColorLabel.vue"; //模糊搜索
+import RickColorLabel from "@/components/RickColorLabel.vue";
+import {getDeviceList, getUserInfo, getUserList} from "@/api/api"; //模糊搜索
 
 // TODO：配置
 let currentPage = ref(1); // 当前页
@@ -99,13 +101,44 @@ let currentPage = ref(1); // 当前页
 let pageSize = 10; //一页显示多少条
 
 // TODO：从配置文件读取假数据
-let dataSoure:any = ref(userListData);
+// 数据源
+let dataSoure:any = ref([]);
 
-//dd唯一的作用就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
-let dd = userListData;
+//dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
+let dd:any = [];
 
-// 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
-let tableData:any = ref(dd);
+// 列表展示的数据源（包括查询结果的展示、非查询状态下数据的展示）
+let tableData:any = ref([]);
+
+//TODO: 页面加载
+onMounted(()=>{
+
+  // 从配置文件读取假数据
+  dataSoure.value = userListData;
+
+//dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
+  dd = userListData;
+
+//TODO: 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
+  tableData.value = dd;
+  //  向服务器请求（用户列表数据）
+  getUserInfo({
+    user_id: 10000014
+  }).then((res) => {
+    console.log("请求结束了\\n");
+    console.log(res);
+    if (res["code"] && res["code"] === "0") {
+      // 登录成功
+      alert("请求成功");
+      // // json字符串 -> map
+      // let userJson = JSON.parse(res["body"]);
+      //
+      // // 取出用户名
+      // let device_id = userJson["device_id"]; //设备编号
+      // let device_type = userJson["device_type"]; //设备型号;
+    }
+  })
+})
 
 // v-model：搜索关键词
 let keyWords = ref("");

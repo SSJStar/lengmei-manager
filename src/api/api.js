@@ -44,8 +44,16 @@ export function doUpdatePwd(params) {
 export function getUserInfo(params) {
   return http.get("/userInfo", params);
 }
+export function getUserList(params) {
+  return http.get("/users", params);
+}
 
 // 获取设备列表
+/**
+ *
+ * */
+
 export function getDeviceList(params) {
   return http.get("/rft/getNewDevices", params);
 }
+// http://hvac.365env.com/rft/getNewDevices?user_id=10000014

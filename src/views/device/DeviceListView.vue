@@ -123,7 +123,8 @@ import { getDeviceList } from "@/api/api.js" //请求
 import { deviceListData } from "@/views/device/deviceListData";
 import { Search } from "@element-plus/icons-vue"; //搜索图标
 import { fuzzySearch } from "@/statics/ssj-method-extension"; //模糊搜索
-import RickColorLabel from "@/components/RickColorLabel.vue"; //高亮组件
+import RickColorLabel from "@/components/RickColorLabel.vue";
+import {userListData} from "@/views/user/userListData"; //高亮组件
 interface User {
   device_id: string
   device_type: string
@@ -136,15 +137,35 @@ interface User {
 let currentPage = ref(1); // 当前页
 let pageSize = 10; //一页显示多少条
 
-// TODO: 数据源
-// let tableData: User[] = [{},{}]
 // TODO：从配置文件读取假数据
-let dataSoure:any = ref(deviceListData);
-//dd唯一的作用就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
-let dd = deviceListData;
+// let dataSoure:any = ref(deviceListData);
+// //dd唯一的作用就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
+// let dd = deviceListData;
+//
+// // 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
+// let tableData:any = ref(dd);
+
+// 数据源
+let dataSoure:any = ref([]);
+
+//dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
+let dd:any = [];
+
+// 列表展示的数据源（包括查询结果的展示、非查询状态下数据的展示）
+let tableData:any = ref([]);
+
+onMounted(()=>{
+  console.log("onMounted---");
+  // TODO：从配置文件读取假数据
+  dataSoure.value = deviceListData;
+
+//dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
+  dd = deviceListData;
 
 // 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
-let tableData:any = ref(dd);
+  tableData.value = dd;
+})
+
 
 // v-model：搜索关键词
 let keyWords = ref("");
@@ -416,9 +437,10 @@ onMounted(()=>{
       alert("请求成功");
       // json字符串 -> map
       let userJson = JSON.parse(res["body"]);
-      // 取出用户名
+
       let device_id = userJson["device_id"]; //设备编号
       let device_type = userJson["device_type"]; //设备型号;
+      alert(`设备编号:${device_id} 设备型号:${device_type}`);
     }
   })
 });
