@@ -93,7 +93,8 @@ import { userListData } from "@/views/user/userListData";
 import { Search } from "@element-plus/icons-vue";
 import { fuzzySearch } from "@/statics/ssj-method-extension";
 import RickColorLabel from "@/components/RickColorLabel.vue";
-import {getDeviceList, getUserInfo, getUserList} from "@/api/api"; //模糊搜索
+import {getDeviceList, getUserInfo, getUserList} from "@/api/api.js"; //模糊搜索
+import axios from "axios";
 
 // TODO：配置
 let currentPage = ref(1); // 当前页
@@ -121,8 +122,9 @@ onMounted(()=>{
 
 //TODO: 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
   tableData.value = dd;
+
   //  向服务器请求（用户列表数据）
-  getUserInfo({
+  getUserList({
     user_id: 10000014
   }).then((res) => {
     console.log("请求结束了\\n");
@@ -130,6 +132,7 @@ onMounted(()=>{
     if (res["code"] && res["code"] === "0") {
       // 登录成功
       alert("请求成功");
+      console.log(res);
       // // json字符串 -> map
       // let userJson = JSON.parse(res["body"]);
       //
@@ -138,6 +141,19 @@ onMounted(()=>{
       // let device_type = userJson["device_type"]; //设备型号;
     }
   })
+
+
+  // 为给定 ID 的 user 创建请求
+  // axios.get('/rft/getNewDevices?user_id=10000014')
+  // axios.get('http://hvac.365env.com/rft/getNewDevices?user_id=10000014')
+  //     .then(function (response) {
+  //       console.log("sddsdssdsd:")
+  //       console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       console.log("错错啦！！")
+  //       console.log(error);
+  //     });
 })
 
 // v-model：搜索关键词

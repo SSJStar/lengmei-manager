@@ -7,6 +7,7 @@ import axios from "axios";
 const Axios = axios.create({
   baseURL: "/api", //'http://192.168.50.18:9091',"http://hvac.365env.com/rft",
   // baseURL: "http://hvac.365env.com",
+  // baseURL: "https://result.eolink.com",
   timeout: 3000,
   /*也可以不设置Content-Type，影响是在你发送请求时
     Vue会先发送OPTIONS包探测路由是否存在，需要后端也做设置响应OPTIONS
@@ -15,6 +16,7 @@ const Axios = axios.create({
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
     // "Access-Control-Allow-Origin":"http://hvac.365env.com",
+    // "Access-Control-Allow-Origin":"*",
   },
   /*这个配置很重要，允许axios携带用户Cookie到后端，不设置这个的话
     Set-Cookie是无效的,除此之外,Chrome默认开启了SameSite检查，如果
@@ -26,11 +28,17 @@ const Axios = axios.create({
 Axios.interceptors.request.use(
   (req) => {
     // 请求拦截处理
-    console.log("这里是请求拦截器，我拦截了请求", req);
+    console.log("这里是请求拦截器，我拦截了请求1", req);
     //设置请求头
     // req.headers["requestFrom"] = "vue";
-    // req.headers["Access-Control-Allow-Origin"] = "*";
-    return req;
+    //   req.baseURL = "https://result.eolink.com"
+      //https://result.eolink.com/XCtnfMJ85f813d3a7847f14c01592a467dbb707990534d0?uri=/user/list
+      if (req.url === "/rft/getNewDevices") {
+        console.log("111111")
+        // req.baseURL = "/yisuanyun";
+        req.baseURL = "http://hvac.365env.com";
+      }
+      return req;
   },
   (err) => {
     console.log("在发送请求时发生错误，错误为", err);

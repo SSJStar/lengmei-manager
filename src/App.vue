@@ -15,10 +15,14 @@
 </template>
 
 <script>
+// 测试代码
+console.log("这是App.vue")
+
 // import HelloWorld from './components/HelloWorld.vue'
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 export default {
-  name: 'App',
+  // name: 'App',
+  id:"#app",
   computed: {
     zhCn() {
       return zhCn

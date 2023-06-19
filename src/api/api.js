@@ -41,12 +41,12 @@ export function doUpdatePwd(params) {
 }
 
 // 获取用户信息
-export function getUserInfo(params) {
-  return http.get("/userInfo", params);
-}
 export function getUserList(params) {
-  return http.get("/users", params);
+  return http.get("/XCtnfMJ85f813d3a7847f14c01592a467dbb707990534d0?uri=/user/list", params);
 }
+// export function getUserInfo(params) {
+//   return http.get("/users", params);
+// }
 
 // 获取设备列表
 /**
@@ -54,6 +54,7 @@ export function getUserList(params) {
  * */
 
 export function getDeviceList(params) {
-  return http.get("/rft/getNewDevices", params);
+  return http.get("/XCtnfMJ85f813d3a7847f14c01592a467dbb707990534d0?uri=/device/list", params);
 }
 // http://hvac.365env.com/rft/getNewDevices?user_id=10000014
+// https://result.eolink.com/XCtnfMJ85f813d3a7847f14c01592a467dbb707990534d0?uri=/device/list

@@ -5,7 +5,7 @@ export const deviceListData = [
         device_type: 'zw1001',
         address: 'No. 189, Grove St, Los Angeles',
         state: "0",
-        holder: "李强", //持有者
+        holder: "李强",
         users:[
             {
                 user_id: "10001",
@@ -22,7 +22,7 @@ export const deviceListData = [
         device_type: 'zw2105',
         address: 'No. 189, Grove St, Los Angeles',
         state: "1",
-        holder: "王羽", //持有者
+        holder: "王羽",
         users:[
             {
                 user_id: "10001",
@@ -43,7 +43,7 @@ export const deviceListData = [
         device_type: 'zw1516',
         address: 'No. 189, Grove St, Los Angeles',
         state: "2",
-        holder: "李林", //持有者
+        holder: "李林",
         users:[
             {
                 user_id: "10001",
@@ -64,7 +64,7 @@ export const deviceListData = [
         device_type: 'zw1001',
         address: 'No. 189, Grove St, Los Angeles',
         state: "3",
-        holder: "李秋生", //持有者
+        holder: "李秋生",
         users:[
             {
                 user_id: "10001",
@@ -85,7 +85,7 @@ export const deviceListData = [
         device_type: 'zw2106',
         address: 'No. 189, Grove St, Los Angeles',
         state: "1",
-        holder: "王萌", //持有者
+        holder: "王萌",
         users:[],
     },
     {
@@ -93,7 +93,7 @@ export const deviceListData = [
         device_type: 'zw1516',
         address: 'No. 189, Grove St, Los Angeles',
         state: "2",
-        holder: "张豪", //持有者
+        holder: "张豪",
         users:[],
     },
     {
