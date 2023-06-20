@@ -129,6 +129,7 @@ onMounted(() => {
   const router = useRoute();
 
   console.log("3333" + router.name);
+  // 保证网页刷新，菜单栏选中状态不丢失
   if (router.name === "home") {
     sel.value = "1";
   }else{

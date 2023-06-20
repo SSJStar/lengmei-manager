@@ -152,4 +152,12 @@ export const deviceListData = [
         holder: "张圣涛", //持有者
         users:[],
     },
+    {
+        device_id: '14',
+        device_type: 'zw1218',
+        address: 'No. 189, Grove St, Los Angeles',
+        state: "1",
+        holder: "ApiKit数据", //持有者
+        users:[],
+    },
 ];

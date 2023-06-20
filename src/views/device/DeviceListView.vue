@@ -135,7 +135,7 @@ interface User {
 
 // TODO: 配置
 let currentPage = ref(1); // 当前页
-let pageSize = 10; //一页显示多少条
+let pageSize = 10; // 一页显示多少条
 
 // TODO：从配置文件读取假数据
 // let dataSoure:any = ref(deviceListData);
@@ -154,16 +154,40 @@ let dd:any = [];
 // 列表展示的数据源（包括查询结果的展示、非查询状态下数据的展示）
 let tableData:any = ref([]);
 
+// TODO: 页面加载
 onMounted(()=>{
   console.log("onMounted---");
-  // TODO：从配置文件读取假数据
-  dataSoure.value = deviceListData;
+  // 从配置文件读取假数据
+  // dataSoure.value = deviceListData;
+  dataSoure.value = [];
 
 //dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
-  dd = deviceListData;
+//   dd = deviceListData;
+  dd = []
 
 // 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
-  tableData.value = dd;
+//   tableData.value = dd;
+
+  getDeviceList({
+    user_id: 10000014
+  }).then((res) => {
+    console.log("请求结束了\\n");
+    console.log(res);
+    // console.log(typeof res);
+
+    let code = res["code"]
+
+    if (code !== null && code.toString() === "0") {
+      // 登录成功
+      // alert("请求成功");
+      // json字符串 -> map
+      // let userJson = JSON.parse(res["body"]);
+
+      dataSoure.value = res["data"];
+      tableData.value = res["data"];
+      setTimeout(()=>pageTurningRefresh.value ++,20)
+    }
+  })
 })
 
 
@@ -280,15 +304,16 @@ const addDecice = () => {
         users:[],
       }
       if (device_id.length > 0){
-        tableData.value.push(obj);
+        // tableData.value.push(obj);
         dataSoure.value.push(obj);
+        setTimeout(()=>pageTurningRefresh.value ++,20)
         console.log("添加成功！tableData---->"+tableData);
       }
     }
     // alertMsg有内容说明点击的不是"取消"按钮
     setTimeout(()=>{
       alert(alertMsg);
-    },1000)
+    },500)
   })
 }
 
@@ -425,25 +450,6 @@ const handleDelete = (index: number, row: object) => {
   });
 };
 
-// TODO: 页面加载
-onMounted(()=>{
-  getDeviceList({
-    user_id: 10000014
-  }).then((res) => {
-    console.log("请求结束了\\n");
-    console.log(res);
-    if (res["code"] && res["code"] === "0") {
-      // 登录成功
-      alert("请求成功");
-      // json字符串 -> map
-      let userJson = JSON.parse(res["body"]);
-
-      let device_id = userJson["device_id"]; //设备编号
-      let device_type = userJson["device_type"]; //设备型号;
-      alert(`设备编号:${device_id} 设备型号:${device_type}`);
-    }
-  })
-});
 </script>
 
 <style>

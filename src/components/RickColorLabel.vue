@@ -20,6 +20,7 @@ onUpdated(()=>{
   // props.text是全文内容，
   // replace是替换函数，用第2个参数替换第1个参数，第2个参数是拼接好的html内容，其中包含了样式
   showText.value = props.text.replace(props.replaceText,"<span style='color: "+props.replaceColor+"'>"+props.replaceText+"</span>")
+  console.log("richColorLabel 打印showText.value：" ,showText.value)
 });
 
 </script>

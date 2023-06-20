@@ -218,12 +218,13 @@ function childSelectAction(index) {
   let arr = index.split(splitChar); //得到一个拆分后的数组
   console.log("拆分后的数组：" + arr);
 
+  // for循环的目的是，通过取出"3-2-1"里面的3、2、1，然后从数据源listJson一层层剥下去，得到最终的json对象
   for (let i = 0; i < arr.length; i++) {
     //过滤掉字符splitChar，只处理数字（但是要确保arr第一个字符是数字字符串，否则可能会报错）
     if (arr[i] === splitChar) continue;
     //数据源listJson，第一层数组是被list包着，第二层开始才被childrens包着
     if (i == 0) {
-      // 减去1是因为，index下标是从1开始排列，而for循环索引、数组下标排列索引都是从1开始
+      // 减去1是因为，index下标是从1开始排列，而for循环索引、数组下标排列索引都是从0开始
       resultItem = resultItem.list[arr[i] - 1];
     } else {
       // 减去1理由：同if

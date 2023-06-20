@@ -93,7 +93,7 @@ import { userListData } from "@/views/user/userListData";
 import { Search } from "@element-plus/icons-vue";
 import { fuzzySearch } from "@/statics/ssj-method-extension";
 import RickColorLabel from "@/components/RickColorLabel.vue";
-import {getDeviceList, getUserInfo, getUserList} from "@/api/api.js"; //模糊搜索
+import { getUserList } from "@/api/api.js"; //模糊搜索
 import axios from "axios";
 
 // TODO：配置
@@ -105,8 +105,8 @@ let pageSize = 10; //一页显示多少条
 // 数据源
 let dataSoure:any = ref([]);
 
-//dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
-let dd:any = [];
+// //dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
+// let dd:any = [];
 
 // 列表展示的数据源（包括查询结果的展示、非查询状态下数据的展示）
 let tableData:any = ref([]);
@@ -115,26 +115,29 @@ let tableData:any = ref([]);
 onMounted(()=>{
 
   // 从配置文件读取假数据
-  dataSoure.value = userListData;
-
-//dd唯一的作用，就是给tableData初始化内容，如果直接用userListData来初始化，会导致dataSoure的值受到tableData值的影响
-  dd = userListData;
+  // dataSoure.value = userListData;
+  dataSoure.value = [];
 
 //TODO: 列表展示数据源（包括查询结果的展示、非查询状态下数据的展示）
-  tableData.value = dd;
-
+//   tableData.value = dd;
+  tableData.value = [];
   //  向服务器请求（用户列表数据）
   getUserList({
     user_id: 10000014
   }).then((res) => {
     console.log("请求结束了\\n");
     console.log(res);
-    if (res["code"] && res["code"] === "0") {
+    console.log(typeof res);
+    console.log(res["code"].toString());
+    if (res["code"] !== null && res["code"].toString() === "0") {
       // 登录成功
-      alert("请求成功");
+      // alert("请求成功");
       console.log(res);
-      // // json字符串 -> map
-      // let userJson = JSON.parse(res["body"]);
+      dataSoure.value = res["data"];
+      tableData.value = res["data"];
+      console.log("userJson:");
+      // 加这行，可以让rickColorLabel组件刷新
+      setTimeout(()=>pageTurningRefresh.value ++,20);
       //
       // // 取出用户名
       // let device_id = userJson["device_id"]; //设备编号
@@ -224,8 +227,6 @@ const handleDelete = (index: number, row: object) => {
  *  时间：2023/05/08 15:16:08
  */
 const handleBind = (index: number, row: object) => {
-  // console.log("绑定 - "+ index, row)
-  // console.log("addDecice");
   let vars = {
     component:BindView,
     title:"绑定设备",
@@ -275,7 +276,6 @@ const handleUnBind = (index: number, row: object) => {
  *  时间：2023/05/05 15:06:11
  */
 const addUser = () => {
-  // console.log("addUser");
   let vars = {
     component:AddUser,
     title:"添加用户",
@@ -299,8 +299,9 @@ const addUser = () => {
         company: json["company"],
         devices: []
     }
-    tableData.value.push(user_add);
+    // tableData.value.push(user_add);
     dataSoure.value.push(user_add);
+    setTimeout(()=>pageTurningRefresh,20)
   })
 }
 
