@@ -215,7 +215,7 @@ const handleDelete = (index: number, row: object) => {
           dataSoure.value.splice(aindex, 1);
         }
       });
-      tableData.value.splice(current_index, 1);
+      // tableData.value.splice(current_index, 1);
     }
   });
 };

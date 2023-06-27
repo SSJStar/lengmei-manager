@@ -21,7 +21,8 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/",
         name: "home",
-        component: () => import("../views/user/UserListView.vue"),
+        // component: () => import("../views/user/UserListView.vue"),
+        component: () => import("../views/test/RootView.vue"),
       },
       // 用户列表
       {
