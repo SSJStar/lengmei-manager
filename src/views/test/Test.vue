@@ -1,21 +1,42 @@
 <template>
-  <button @click="handelUpdate">所有id + 1</button>
-  <br/>
-  <button @click="handelUpdate2">所有name，追加"张"</button>
+<!--  <button @click="handelUpdate">所有id + 1</button>-->
+<!--  <br/>-->
+<!--  <button @click="handelUpdate2">所有name，追加"张"</button>-->
 
-  <div class="itemDiv" v-for="item in menu" v-memo="[item.name]">
-    第{{count }}次渲染！<br />
-    <h2>{{ item.id }} </h2>
-    <h4> {{ item.name }} </h4>
-  </div>
+<!--  <div class="itemDiv" v-for="item in menu" v-memo="[item.name]">-->
+<!--    第{{count }}次渲染！<br />-->
+<!--    <h2>{{ item.id }} </h2>-->
+<!--    <h4> {{ item.name }} </h4>-->
+<!--  </div>-->
+
+
+  <div id="numID1" style="height: 100px;overflow: hidden"></div>
+  <br />
+  <br />
+  <br />
+  <div id="numID2" style="height: 100px;overflow: hidden"></div>
+
+<!--  <SecondView></SecondView>-->
 
 </template>
 
 <script setup>
-import { nextTick } from "vue";
+import {nextTick, onMounted} from "vue";
 import { ref } from "vue";
+import async from "async";
+// import SecondView from "@/views/test/SecondView.vue";
+
 
 let count = ref(0) // 记录渲染次数
+
+// async function aa() {
+//   let str = ""
+//   for (let i = 0; i < 10; i++) {
+//     str += " " + i
+//   }
+//   document.getElementById("numID2").innerHTML = str;
+// }
+
 
 // 初始化menu数组 - 制造5000条数据
 const menu = ref(
@@ -26,6 +47,30 @@ const menu = ref(
       };
     }),
 );
+
+// const arr = Array.from({ length: 50000}, (_, index) => {
+//   return {
+//     id: "1000" + index,
+//     name: "name"+ index,
+//   };
+//   // return index;
+// })
+const arr = new Array(1000000)
+console.time("forEach循环");
+arr.forEach((value) => {
+  let a = value;
+    // a = value;
+    // a = value;
+})
+console.timeEnd("forEach循环");
+console.time("for循环");
+let i;
+for ( i = 0; i < arr.length; i++) {
+  let b = arr[i];
+  // b = arr[i];
+  // b = arr[i];
+}
+console.timeEnd("for循环");
 
 // 所有id + 1
 const handelUpdate = () => {

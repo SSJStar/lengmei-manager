@@ -59,6 +59,10 @@ const routes: Array<RouteRecordRaw> = [
         path: "testView",
         component: () => import("../views/SSJTest.vue"),
       },
+      // {
+      //   path: "threeView",
+      //   component: () => import("../views/ThreeView.vue"),
+      // }
     ],
   },
 ]
