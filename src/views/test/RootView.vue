@@ -64,27 +64,36 @@
 <!--</script>-->
 
 <template>
-<!--  <img alt="Vue logo" src="./assets/logo.png" />-->
   <div style="background-color: #42b983">
     <h2>我是父组件</h2>
+    <!--  作用域插槽  -->
     <child>
-<!--      <layout></layout>-->
-<!--      <template :v-slot="header">-->
-<!--        <div>我是 header：{{ message }}</div>-->
-<!--      </template>-->
-<!--      <div>我没有名字：{{ message }}</div>-->
-      <template v-slot="footer">
-        <div>我是 footer：{{ message }}</div>
+      <!--   具名卡槽：soltGrade   -->
+      <template v-slot:soltGrade="soltGrade">
+        {{ exchangeGrade(soltGrade.text) }}
+      </template>
+      <!--   具名卡槽：soltAge   -->
+      <template v-slot:soltAge="soltAge">
+        {{ exchangeAge(soltAge.age) }}
       </template>
     </child>
   </div>
 </template>
 
 <script setup>
-import ddSon from "@/views/test/SecondView.vue";
-const message = "标题"
-const header = "header"
-const footer = "footer"
+import child from "@/views/test/SecondView.vue";
+const exchangeGrade = (grade) => {
+  console.log(`age:${grade}`);
+  if (grade < 60) return "不及格";
+  else if (grade < 90) return "良好";
+  else return "优秀";
+}
+
+const exchangeAge = (age) => {
+  console.log(`age:${age}`);
+  if (age < 18) return "未成年";
+  else return "已成年";
+}
 </script>
 
 

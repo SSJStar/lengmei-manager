@@ -123,16 +123,14 @@
 
 
 <template>
-  <div class="child-box" style="background-color:red">
+  <div class="child-box" style="background-color: #999999">
     <h3>我是子组件</h3>
-    <header>
-      <slot name="header"></slot>
-    </header>
-    <main>
-      <slot></slot>
-    </main>
     <footer>
-      <slot name="footer"></slot>
+      成绩：
+      <slot name="soltGrade" text="86"></slot>
+      <br />
+      是否成年：
+      <slot name="soltAge" age="22"></slot>
     </footer>
   </div>
 </template>
