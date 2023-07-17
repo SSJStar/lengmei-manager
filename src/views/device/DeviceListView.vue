@@ -285,7 +285,6 @@ const addDecice = () => {
     subTitle:"输入设备编号"
   }
   ssjTip(vars).then((msg)=>{
-    console.log("ssjTip-- id -->"+msg);
     const device_id = msg as string;
     if (device_id.length == 0){
       return;
@@ -333,7 +332,7 @@ const  getState = (type: string) => {
       return "运行";
     } break;
   }
-  console.log(type + " 未知")
+  console.log("getState--未知的type：" + type)
   return "未知";
 }
 

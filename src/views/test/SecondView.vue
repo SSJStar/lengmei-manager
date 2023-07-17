@@ -121,16 +121,118 @@
 
 
 
+<!-- 测试comouted -->
+<!--<template>-->
+<!--  <div class="child-box" style="background-color: #999999">-->
+<!--    <h3>我是子组件</h3>-->
+<!--    <footer>-->
+<!--      语文成绩：-->
+<!--      <input id="grade1" placeholder="请输入语文成绩" style="margin-top: 10px" v-model="a" />-->
+<!--      数学成绩：-->
+<!--      <input id="grade2" placeholder="请输入数学成绩" style="margin-top: 10px" v-model="b" />-->
+<!--      总成绩：-->
+<!--      <label style="margin-top: 10px">{{ sum }}</label>-->
+<!--      <br />-->
+<!--      <button @click="()=>{ a ++ }">语文成绩累加</button>-->
+<!--      <button @click="()=>{ b ++ }" style="margin-left: 30px" >数学成绩累加</button>-->
+<!--      <button @click="sumAdd" style="margin-left: 30px" >sum累加</button>-->
+<!--    </footer>-->
+<!--  </div>-->
+<!--</template>-->
 
+<!--<script setup>-->
+<!--import {computed, ref} from "vue";-->
+
+<!--let a = ref(20); // 语文成绩-->
+
+<!--let b = ref(30); // 数学成绩-->
+
+<!--let sum = computed(()=>{ // 总成绩-->
+<!--  return a.value + b.value-->
+<!--})-->
+
+<!--// 测试直接操作sum-->
+<!--const sumAdd = ()=> {-->
+<!--  console.log("sumAdd被执行")-->
+<!--  sum ++-->
+<!--  console.log(sum)-->
+<!--  console.log(typeof sum)-->
+<!--}-->
+<!--</script>-->
 <template>
-  <div class="child-box" style="background-color: #999999">
-    <h3>我是子组件</h3>
-    <footer>
-      成绩：
-      <slot name="soltGrade" text="86"></slot>
-      <br />
-      是否成年：
-      <slot name="soltAge" age="22"></slot>
-    </footer>
-  </div>
+  <div>sencondView</div>
 </template>
+<script setup>
+import {computed, onMounted, reactive, ref, watch} from "vue";
+
+onMounted(()=>{
+  console.log("ref----");
+  // ref - 浅度监听
+  let numRef1 = ref(1)
+  watch(numRef1,(newValue, oldValue)=>{
+    console.log(`ref浅度监听1 -  新值：${newValue}    旧值:${oldValue}`);
+  });
+  numRef1.value = 2;
+
+  // ref - 深度监听
+  let numRef2 = ref({num:100})
+  watch(numRef2,(newValue, oldValue)=>{
+    console.log(`ref深度监听2 -  新值：${newValue}    旧值:${oldValue}`);
+  });
+  numRef2.value.num = 101;
+
+  // ref - 深度监听
+  let numRef3 = ref({num:100})
+  watch(numRef3,(newValue, oldValue)=>{
+    console.log(`\nref深度监听3 -  新值：${newValue}    旧值:${oldValue}`);
+    console.log("新值：");
+    console.log(newValue);
+
+    console.log("旧值:");
+    console.log(oldValue);
+  },{deep:true});
+  numRef3.value.num = 101;
+
+
+  // let numRef4 = ref({num:1000})
+  // computed:{
+  //   function data(){
+  //     return JSON.parse(JSON.stringify(numRef4))
+  //   }
+  // };
+  // watch(
+  //     data: {
+  //       handel:function (newValue, oldValue){
+  //         console.log("新值：");
+  //         console.log(newValue);
+  //
+  //         console.log("旧值:");
+  //         console.log(oldValue);
+  //       },
+  //   // deep:true,
+  //   },
+  // );
+  //
+  // numRef4.value.num = 1001;
+
+
+
+/// reactive监听
+//
+//
+//   let hobbyRef = reactive({hobby:"打篮球"})
+//   watch(hobbyRef,(newValue, oldValue,onCleanup)=>{
+//     console.log("hobbyRef.hobby发生了变化。  ")
+//
+//     console.log("newValue   ")
+//     console.log(newValue)
+//
+//     console.log("oldValue   ")
+//     console.log(oldValue)
+//
+//     console.log("onCleanup  ")
+//     console.log(onCleanup)
+//   },{deep:true});
+//   hobbyRef.hobby = "打乒乓球";
+});
+</script>

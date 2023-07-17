@@ -17,6 +17,10 @@ const routes: Array<RouteRecordRaw> = [
     name: 'test',
     component: () => import(/* webpackChunkName: "about" */ "../views/test/Test.vue"),
   },
+  {
+    path: "/secondView",
+    component: () => import("../views/test/SecondView.vue"),
+  },
   //主页，又名"布局组件"，包含组件：HeadNav、LeftMenu、router-view
   {
     path: "/layoutView",
@@ -26,8 +30,8 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/",
         name: "home",
-        // component: () => import("../views/user/UserListView.vue"),
-        component: () => import("../views/test/RootView.vue"),
+        component: () => import("../views/user/UserListView.vue"),
+        // component: () => import("../views/test/RootView.vue"),
         // component: () => import("../views/test/Test.vue"),
       },
       // 用户列表
@@ -59,10 +63,6 @@ const routes: Array<RouteRecordRaw> = [
         path: "testView",
         component: () => import("../views/SSJTest.vue"),
       },
-      // {
-      //   path: "threeView",
-      //   component: () => import("../views/ThreeView.vue"),
-      // }
     ],
   },
 ]

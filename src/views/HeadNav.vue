@@ -58,7 +58,7 @@ const navgation_list_fontSize = staticVars.NAVGATION_LISTFONTSIZE;
 const navgation_titleColor = staticVars.NAVGATION_TITLECOLOR;
 
 onMounted(function () {
-  console.log("onMounted被执行");
+  // console.log("onMounted被执行");
   // 加延迟是因为，直接获取到的userInfoDiv宽度不对，可能是组件没有加载完全
   setTimeout(() => {
     // 计算box组件的right值
