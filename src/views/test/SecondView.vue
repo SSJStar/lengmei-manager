@@ -159,6 +159,11 @@
 <!--  console.log(typeof sum)-->
 <!--}-->
 <!--</script>-->
+
+
+
+
+<!-- 测试watch -->
 <template>
   <div>sencondView</div>
 </template>
@@ -166,25 +171,27 @@
 import {computed, onMounted, reactive, ref, watch} from "vue";
 
 onMounted(()=>{
-  console.log("ref----");
-  // ref - 浅度监听
+  // ref - 浅度监听【基本数据类型】
   let numRef1 = ref(1)
   watch(numRef1,(newValue, oldValue)=>{
+    console.log("\n------ ref - 浅度监听【基本数据类型】 ------")
     console.log(`ref浅度监听1 -  新值：${newValue}    旧值:${oldValue}`);
   });
   numRef1.value = 2;
 
-  // ref - 深度监听
-  let numRef2 = ref({num:100})
+  // ref - 浅度监听【对象】
+    let numRef2 = ref({num:100})
   watch(numRef2,(newValue, oldValue)=>{
+    console.log("\n------ ref - 监听对象 ------")
     console.log(`ref深度监听2 -  新值：${newValue}    旧值:${oldValue}`);
   });
   numRef2.value.num = 101;
 
-  // ref - 深度监听
+  // ref - 深度监听【对象】
   let numRef3 = ref({num:100})
   watch(numRef3,(newValue, oldValue)=>{
-    console.log(`\nref深度监听3 -  新值：${newValue}    旧值:${oldValue}`);
+    console.log("\n------ ref - 深度监听 ------")
+    console.log(`ref深度监听3 -  新值：${newValue}    旧值:${oldValue}`);
     console.log("新值：");
     console.log(newValue);
 
@@ -194,45 +201,62 @@ onMounted(()=>{
   numRef3.value.num = 101;
 
 
-  // let numRef4 = ref({num:1000})
-  // computed:{
-  //   function data(){
-  //     return JSON.parse(JSON.stringify(numRef4))
-  //   }
-  // };
-  // watch(
-  //     data: {
-  //       handel:function (newValue, oldValue){
-  //         console.log("新值：");
-  //         console.log(newValue);
-  //
-  //         console.log("旧值:");
-  //         console.log(oldValue);
-  //       },
-  //   // deep:true,
-  //   },
-  // );
-  //
-  // numRef4.value.num = 1001;
+// ref - 深度监听【解决新旧值一样的问题】
+  let numRef4 = ref({num:100})
+  let computedVar = computed(() => {
+    // 通过JSON.parse和JSON.stringify双层嵌套操作，使之变成了值的监听，而不是地址的监听
+    return JSON.parse(JSON.stringify(numRef4))
+  });
+  watch(computedVar,(newValue, oldValue) => {
+    console.log("\n------ ref - 深度监听【解决新旧值一样的问题】 ------")
+    console.log(`ref深度监听4 -  新值：${newValue}    旧值:${oldValue}`);
+          console.log("新值：");
+          console.log(newValue);
+
+          console.log("旧值:");
+          console.log(oldValue);
+        })
+  numRef4.value.num = 101;
+
+
+  // ref - 深度监听【对象】
+  let numRef5 = ref({num:100})
+  // let oldVal = JSON.parse(JSON.stringify(numRef5.value));
+  let oldVal = numRef5.value;
+  watch(numRef5,(newValue, oldValue,onCleanup)=>{
+    console.log("\n------ ref - 深度监听 ------")
+    console.log(`ref深度监听5 -  新值：${newValue}    旧值:${oldValue}`);
+    console.log("新值：");
+    console.log(newValue);
+
+    console.log("旧值:");
+    console.log(oldValue);
+
+    console.log("旧值2:");
+    console.log(oldVal);
+  //   执行完上述代码，最后再执行
+    oldVal = newValue;
+  },{deep:true});
+  numRef5.value.num = 101;
+
+
+
 
 
 
 /// reactive监听
 //
 //
-//   let hobbyRef = reactive({hobby:"打篮球"})
-//   watch(hobbyRef,(newValue, oldValue,onCleanup)=>{
-//     console.log("hobbyRef.hobby发生了变化。  ")
-//
-//     console.log("newValue   ")
-//     console.log(newValue)
-//
-//     console.log("oldValue   ")
-//     console.log(oldValue)
-//
-//     console.log("onCleanup  ")
-//     console.log(onCleanup)
-//   },{deep:true});
-//   hobbyRef.hobby = "打乒乓球";
+  let hobbyRef = reactive({hobby:"打篮球"})
+  watch(hobbyRef,(newValue, oldValue)=>{
+    console.log("\n------hobbyRef.hobby发生了变化。------  ")
+
+    console.log("newValue   ")
+    console.log(newValue)
+
+    console.log("oldValue   ")
+    console.log(oldValue)
+  });
+  hobbyRef.hobby = "打乒乓球";
 });
 </script>
