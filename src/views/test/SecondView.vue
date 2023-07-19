@@ -165,98 +165,32 @@
 
 <!-- 测试watch -->
 <template>
-  <div>sencondView</div>
+  <div>
+    姓名:<label>{{ person.name }}</label>
+  </div>
+  <div>
+    年龄:<label>{{ person.age }}</label>
+  </div>
+  <button @click="changeAction">修改年龄</button>
 </template>
+
 <script setup>
-import {computed, onMounted, reactive, ref, watch} from "vue";
+import {reactive, toRaw} from "vue";
 
-onMounted(()=>{
-  // ref - 浅度监听【基本数据类型】
-  let numRef1 = ref(1)
-  watch(numRef1,(newValue, oldValue)=>{
-    console.log("\n------ ref - 浅度监听【基本数据类型】 ------")
-    console.log(`ref浅度监听1 -  新值：${newValue}    旧值:${oldValue}`);
-  });
-  numRef1.value = 2;
+let person = reactive({
+  name: "张三",
+  age: 22,
+  sex: "男"
+})
 
-  // ref - 浅度监听【对象】
-    let numRef2 = ref({num:100})
-  watch(numRef2,(newValue, oldValue)=>{
-    console.log("\n------ ref - 监听对象 ------")
-    console.log(`ref深度监听2 -  新值：${newValue}    旧值:${oldValue}`);
-  });
-  numRef2.value.num = 101;
+const changeAction = ()=>{
 
-  // ref - 深度监听【对象】
-  let numRef3 = ref({num:100})
-  watch(numRef3,(newValue, oldValue)=>{
-    console.log("\n------ ref - 深度监听 ------")
-    console.log(`ref深度监听3 -  新值：${newValue}    旧值:${oldValue}`);
-    console.log("新值：");
-    console.log(newValue);
+  let personCopy = toRaw(person);
+  personCopy.age ++;
+  console.log("age -- " + personCopy.age)
+  console.log(JSON.stringify(personCopy))
+  console.log("age2 -- " + person.age)
+  console.log(JSON.stringify(person))
+}
 
-    console.log("旧值:");
-    console.log(oldValue);
-  },{deep:true});
-  numRef3.value.num = 101;
-
-
-// ref - 深度监听【解决新旧值一样的问题】
-  let numRef4 = ref({num:100})
-  let computedVar = computed(() => {
-    // 通过JSON.parse和JSON.stringify双层嵌套操作，使之变成了值的监听，而不是地址的监听
-    return JSON.parse(JSON.stringify(numRef4))
-  });
-  watch(computedVar,(newValue, oldValue) => {
-    console.log("\n------ ref - 深度监听【解决新旧值一样的问题】 ------")
-    console.log(`ref深度监听4 -  新值：${newValue}    旧值:${oldValue}`);
-          console.log("新值：");
-          console.log(newValue);
-
-          console.log("旧值:");
-          console.log(oldValue);
-        })
-  numRef4.value.num = 101;
-
-
-  // ref - 深度监听【对象】
-  let numRef5 = ref({num:100})
-  // let oldVal = JSON.parse(JSON.stringify(numRef5.value));
-  let oldVal = numRef5.value;
-  watch(numRef5,(newValue, oldValue,onCleanup)=>{
-    console.log("\n------ ref - 深度监听 ------")
-    console.log(`ref深度监听5 -  新值：${newValue}    旧值:${oldValue}`);
-    console.log("新值：");
-    console.log(newValue);
-
-    console.log("旧值:");
-    console.log(oldValue);
-
-    console.log("旧值2:");
-    console.log(oldVal);
-  //   执行完上述代码，最后再执行
-    oldVal = newValue;
-  },{deep:true});
-  numRef5.value.num = 101;
-
-
-
-
-
-
-/// reactive监听
-//
-//
-  let hobbyRef = reactive({hobby:"打篮球"})
-  watch(hobbyRef,(newValue, oldValue)=>{
-    console.log("\n------hobbyRef.hobby发生了变化。------  ")
-
-    console.log("newValue   ")
-    console.log(newValue)
-
-    console.log("oldValue   ")
-    console.log(oldValue)
-  });
-  hobbyRef.hobby = "打乒乓球";
-});
 </script>
