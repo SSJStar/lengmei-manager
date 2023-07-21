@@ -171,11 +171,12 @@
   <div>
     年龄:<label>{{ person.age }}</label>
   </div>
-  <button @click="changeAction">修改年龄</button>
+  <button @click="changeAction">测试promise</button>
 </template>
 
 <script setup>
-import {reactive, toRaw} from "vue";
+import {onMounted, reactive} from "vue";
+import async from "async";
 
 let person = reactive({
   name: "张三",
@@ -183,14 +184,69 @@ let person = reactive({
   sex: "男"
 })
 
-const changeAction = ()=>{
+onMounted(()=>{
+  (async()=>{
+    await method1();
+    await method2();
+  } )()
+})
 
-  let personCopy = toRaw(person);
-  personCopy.age ++;
-  console.log("age -- " + personCopy.age)
-  console.log(JSON.stringify(personCopy))
-  console.log("age2 -- " + person.age)
-  console.log(JSON.stringify(person))
+const method1 = ()=>{
+  console.log("method1 开始执行")
+  return new Promise((resolve,reject) => {
+    setTimeout(()=>{
+      console.log("method1 执行结束")
+      resolve()
+    },2000)
+  });
 }
 
+const method2 = ()=>{
+  console.log("method2 开始执行")
+  return new Promise((resolve,reject) => {
+    setTimeout(()=>{
+      console.log("method2 执行结束")
+      resolve()
+    },1000)
+    console.log("11111111")
+  });
+}
+
+
+// async function changeAction(){
+//   await method1().then(()=>{ console.log("完成1")});
+//   console.log("333")
+//   console.log("444")
+// }
+
+// const changeAction = async ()=>{
+//   await method1().then(()=>{ console.log("完成1")});
+//   console.log("333")
+//   console.log("444")
+// }
+
+// 点击事件
+// const changeAction = ()=>{
+  // Promise.all([method1(),method2()]).then(() => {
+  //   console.log("都完成了");
+  // })
+  // console.log("333")
+  // console.log("444")
+
+  // console.log("111")
+  // (async ()=>{
+  //   method1().then(()=>{ console.log("完成1")});
+  //   console.log("333")
+  //   console.log("444")
+  // })()
+
+
+  // await method1().then(()=>{ console.log("完成1")});
+  // console.log("333")
+  // console.log("444")
+
+
+  // method1().then(()=>{ console.log("完成1")});
+  // method2().then(()=>{ console.log("完成2")});
+// }
 </script>

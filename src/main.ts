@@ -33,5 +33,6 @@ app.config.globalProperties.$http = axios;
 // 加载ElementPlus
 app.use(ElementPlus)
 app.use(router).mount('#app')
+app.use(pinia);
 
 export default acount;
