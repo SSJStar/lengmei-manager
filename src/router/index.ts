@@ -21,6 +21,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/secondView",
     component: () => import("../views/test/SecondView.vue"),
   },
+  {
+    path: "/a",
+    component: () => import("../views/test/Component1.vue"),
+  },
+  {
+    path: "/b",
+    component: () => import("../views/test/Component2.vue"),
+  },
+  {
+    path: "/c",
+    component: () => import("../views/test/Component3.vue"),
+  },
   //主页，又名"布局组件"，包含组件：HeadNav、LeftMenu、router-view
   {
     path: "/layoutView",

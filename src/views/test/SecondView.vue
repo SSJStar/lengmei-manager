@@ -164,89 +164,101 @@
 
 
 <!-- 测试watch -->
+<!--<template>-->
+<!--&lt;!&ndash;  <keep-alive include="a">&ndash;&gt;-->
+<!--&lt;!&ndash;    <component :is="view"></component>&ndash;&gt;-->
+<!--&lt;!&ndash;  </keep-alive>&ndash;&gt;-->
+
+<!--&lt;!&ndash;   将（只）缓存组件name为a或者b的组件, 结合动态组件使用 &ndash;&gt;-->
+<!--  <keep-alive include="a,b">-->
+<!--    <component :is="myView"></component>-->
+<!--  </keep-alive>-->
+
+<!--  &lt;!&ndash; 组件name为c的组件不缓存(可以保留它的状态或避免重新渲染) &ndash;&gt;-->
+<!--  <keep-alive exclude="c">-->
+<!--    <component :is="myView"></component>-->
+<!--  </keep-alive>-->
+
+<!--  &lt;!&ndash; 使用正则表达式，需使用v-bind &ndash;&gt;-->
+<!--  <keep-alive :include="/a|b/">-->
+<!--    <component :is="myView"></component>-->
+<!--  </keep-alive>-->
+
+<!--  &lt;!&ndash; 动态判断 &ndash;&gt;-->
+<!--  <keep-alive :include="includedComponents">-->
+<!--    <router-view></router-view>-->
+<!--  </keep-alive>-->
+
+<!--  &lt;!&ndash; 如果同时使用include,exclude,那么exclude优先于include， 下面的例子只缓存a组件 &ndash;&gt;-->
+<!--  <keep-alive include="a,b" exclude="b">-->
+<!--    <component :is="myView"></component>-->
+<!--  </keep-alive>-->
+
+<!--  &lt;!&ndash; 如果缓存的组件超过了max设定的值5，那么将删除第一个被缓存的组件 &ndash;&gt;-->
+<!--  <keep-alive exclude="c" max="5">-->
+<!--    <component></component>-->
+<!--  </keep-alive>-->
+<!--</template>-->
+
+<!--<script setup>-->
+<!--import { computed, shallowRef } from 'vue'-->
+<!--import a from './Component1.vue'-->
+<!--import b from './Component2.vue'-->
+<!--import c from './Component3.vue'-->
+<!--import ThreeView from "@/views/test/ThreeView.vue";-->
+
+<!--const myView = shallowRef(a)-->
+<!--const includedComponents = computed(() => {-->
+<!--  return myView.value-->
+<!--})-->
+<!--</script>-->
+
+
 <template>
-  <div>
-    姓名:<label>{{ person.name }}</label>
+  <div id="login" v-on:mousedown.left="createLoves($event)" v-on:mouseup="removeSmallHert">
+    <Background ref="background"></Background>
   </div>
-  <div>
-    年龄:<label>{{ person.age }}</label>
+
+  <div style="padding: 30px">
+    <button @click="change('1')">组件1</button>
+    <button @click="change('2')">组件2</button>
+    <button @click="change('3')">组件3</button>
+    <Component :is="componentTag"></Component>
   </div>
-  <button @click="changeAction">测试promise</button>
 </template>
+<script setup lang="ts">
+import { ref } from "vue"
+const componentTag = ref("Component1")
+import Background from "@/views/test/Background.vue"
 
-<script setup>
-import {onMounted, reactive} from "vue";
-import async from "async";
-
-let person = reactive({
-  name: "张三",
-  age: 22,
-  sex: "男"
-})
-
-onMounted(()=>{
-  (async()=>{
-    await method1();
-    await method2();
-  } )()
-})
-
-const method1 = ()=>{
-  console.log("method1 开始执行")
-  return new Promise((resolve,reject) => {
-    setTimeout(()=>{
-      console.log("method1 执行结束")
-      resolve()
-    },2000)
-  });
+const background = ref();
+function createLoves(e){
+  background.value.createLoves(e)
+}
+function removeSmallHert(){
+  background.value.removeSmallHert()
 }
 
-const method2 = ()=>{
-  console.log("method2 开始执行")
-  return new Promise((resolve,reject) => {
-    setTimeout(()=>{
-      console.log("method2 执行结束")
-      resolve()
-    },1000)
-    console.log("11111111")
-  });
-}
+ const change = (index) => {
+    componentTag.value = 'Component' + index
+ }
 
-
-// async function changeAction(){
-//   await method1().then(()=>{ console.log("完成1")});
-//   console.log("333")
-//   console.log("444")
-// }
-
-// const changeAction = async ()=>{
-//   await method1().then(()=>{ console.log("完成1")});
-//   console.log("333")
-//   console.log("444")
-// }
-
-// 点击事件
-// const changeAction = ()=>{
-  // Promise.all([method1(),method2()]).then(() => {
-  //   console.log("都完成了");
-  // })
-  // console.log("333")
-  // console.log("444")
-
-  // console.log("111")
-  // (async ()=>{
-  //   method1().then(()=>{ console.log("完成1")});
-  //   console.log("333")
-  //   console.log("444")
-  // })()
-
-
-  // await method1().then(()=>{ console.log("完成1")});
-  // console.log("333")
-  // console.log("444")
-
-
-  // method1().then(()=>{ console.log("完成1")});
-  // method2().then(()=>{ console.log("完成2")});
-// }
 </script>
+<!-- 此处再添加一个script标签，用于抛出组件 -->
+<script lang="ts">
+import Component1 from './Component1.vue'
+import Component2 from './Component2.vue'
+import Component3 from './Component3.vue'
+export default {
+  components: {Component1, Component2, Component3},
+}
+</script>
+<style>
+#login{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>

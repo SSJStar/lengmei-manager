@@ -21,7 +21,7 @@ console.log("这是main.ts")
 const app = createApp(App)
 // installElementPlus(app)
 
-// 国际化配置
+// 加载ElementPlus,国际化配置
 app.use(ElementPlus, {
     locale: zhCn,
 });
@@ -30,8 +30,6 @@ app.use(ElementPlus, {
 axios.defaults.baseURL = "/api";
 app.config.globalProperties.$http = axios;
 
-// 加载ElementPlus
-app.use(ElementPlus)
 app.use(router).mount('#app')
 app.use(pinia);
 
