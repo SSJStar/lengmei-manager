@@ -185,6 +185,7 @@ export default {
 /* :nth-child(odd) 表示控制奇数样式 */
 .bubble:nth-child(odd){
   /* infinite： 无限循环 */
+  /* ease-in：变化以低速率开始，平均速度过度，结尾戛然而止 */
   animation: flyingOdd 10s infinite ease-in;
 }
 
