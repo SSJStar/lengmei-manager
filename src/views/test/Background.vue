@@ -1,6 +1,8 @@
 <template>
   <div>
+    <!--  气泡背景  -->
     <div id="lovesBgc"></div>
+
     <!-- 点击biubiubiu小心心  start-->
 <!--    <div v-for="(item,index) in loves" v-bind:key="index"  v-bind:ref="loves[index].count"  class="img"-->
 <!--         v-bind:style="item.top+item.left+item.scale+item.opacity" style="  float: left;">-->
@@ -16,9 +18,10 @@
       <div v-for="(item,index) in bubbles" v-bind:key="index" class="bubble"
            v-bind:style="item.color+item.width+item.height+item.left+
 				item.delay+item.duration">
-        <h5 v-if="index===0">111</h5>
-        <h5 v-else-if="index===1">222</h5>
-        <h5 v-else>嘿嘿</h5>
+<!--        <h5 v-if="index===0">111</h5>-->
+<!--        <h5 v-else-if="index===1">222</h5>-->
+<!--        <h5 v-else style="margin: auto">泡</h5>-->
+        <h5>泡</h5>
       </div>
     </div>
     <!-- 上升气泡   stop-->
@@ -28,15 +31,15 @@
 <script>
 export default {
   data(){
-    const text = ["佘雪楠~", "我喜欢你~", "我爱你~", "哎呀呀~", "mua~", "大美女", "想你", "咦~"];
-    const loves = [];
-    const bubbles = [];
+    // const text = ["佘雪楠~", "我喜欢你~", "我爱你~", "哎呀呀~", "mua~", "大美女", "想你", "咦~"];
+    // const loves = [];
+    const bubbles = []; //气泡配置数组
     // count:1,top:'200px',left:'200px',translateY:'-40px',transform:0.5,opacity:0.5
     return {
-      text : text,  //小心心上边显示的文字
-      textIndex : 0,  //小心心数组下标
-      loves : loves, //小心心样式
-      count : 0,   //创建元素个数
+      // text : text,  //小心心上边显示的文字
+      // textIndex : 0,  //小心心数组下标
+      // loves : loves, //小心心样式
+      // count : 0,   //创建元素个数
       bubbles : bubbles
     }
   },
@@ -70,12 +73,13 @@ export default {
     //   //在点击鼠标时更新一次泡泡的位置
     //   this.updateBubble();
     // },
-    removeSmallHert(){
-      this.loves[this.count-1].opacity = 'opacity:' + 0 + ';',
-          this.loves[this.count-1].scale = 'transform:translateY(' + -80 + 'px) scale(' + 0.5 + ');'
-    },
+
+    // removeSmallHert(){
+    //   this.loves[this.count-1].opacity = 'opacity:' + 0 + ';',
+    //       this.loves[this.count-1].scale = 'transform:translateY(' + -80 + 'px) scale(' + 0.5 + ');'
+    // },
     createBubble(){
-      let left = [10, 20, 35, 50, 55, 65, 75, 80, 70, 85,77];
+      // let left = [10, 20, 35, 50, 55, 65, 75, 80, 70, 85,77];
       let wh = [40, 20, 50, 80, 35, 45, 25, 80, 15, 50, 77];
       let duration = [8, 5, 10, 7, 6, 8, 7, 6, 9, 5, 8];
       let	delay = [0, 1, 1, 0, 0, 0, 2, 1, 0, 3, 2];
@@ -115,6 +119,7 @@ export default {
         //   console.log(bubble.duration);
         //   console.log("end~~~!");
         // // }
+        //将气泡配置添加到数组
         this.bubbles.push(bubble);
         //使用随机生成位置，但是显然具有不可控性
         // wh = Math.floor((Math.random()) * 65 + 15);
@@ -124,14 +129,14 @@ export default {
         // 随机色：下一个泡泡的背景色
         color = "rgb(" + parseInt(Math.random() * 255) + "," + parseInt(Math.random() * 255) + "," + parseInt(Math.random() * 255) + ")";
         // this.sleep(1000);
-        console.log(i+'size:'+this.bubbles.length)
+        // console.log(i+'size:'+this.bubbles.length)
       }
     },
-    updateBubble(){
-      //更新泡泡的位置
-      let a=Math.floor(Math.random() * 80) + 10;
-      this.bubbles[Math.floor(Math.random() * 11)].left =  'left:' + a +'%';
-    }
+    // updateBubble(){
+    //   //更新泡泡的位置
+    //   let a=Math.floor(Math.random() * 80) + 10;
+    //   this.bubbles[Math.floor(Math.random() * 11)].left =  'left:' + a +'%';
+    // }
   },
   beforeMount() {
     this.createBubble()
@@ -159,6 +164,7 @@ export default {
   left: 0;
   z-index: -1;
 }
+
 /* biubiubiu小心心 start */
 .img {width: 20px;height: 20px;opacity: 1;position: absolute;z-index: 1000;transition: 2.5s;}
 .left,.right {width: 10px;height: 10px;border-radius: 100%;position: absolute;}
@@ -181,6 +187,11 @@ export default {
   opacity: 0.2;
   z-index: 999;
   animation: flying 10s infinite ease-in;
+  display: flex;
+}
+.bubble h5{
+  /* 通过父元素flex，子元素外边距（margin）自动，达到居中的效果 */
+  margin: auto;
 }
 /* :nth-child(odd) 表示控制奇数样式 */
 .bubble:nth-child(odd){

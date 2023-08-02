@@ -215,8 +215,11 @@
 
 
 <template>
-  <div id="login" v-on:mousedown.left="createLoves($event)" v-on:mouseup="removeSmallHert">
-    <Background ref="background"></Background>
+<!--  <div id="login" v-on:mousedown.left="createLoves($event)" v-on:mouseup="removeSmallHert">-->
+<!--    <BubblesView ref="background"></BubblesView>-->
+<!--  </div>-->
+  <div id="login">
+    <BubblesView ref="background"></BubblesView>
   </div>
 
   <div style="padding: 30px">
@@ -229,15 +232,15 @@
 <script setup lang="ts">
 import { ref } from "vue"
 const componentTag = ref("Component1")
-import Background from "@/views/test/Background.vue"
+import BubblesView from "@/views/test/BubblesView.vue"
 
 const background = ref();
-function createLoves(e){
-  background.value.createLoves(e)
-}
-function removeSmallHert(){
-  background.value.removeSmallHert()
-}
+// function createLoves(e){
+//   background.value.createLoves(e)
+// }
+// function removeSmallHert(){
+//   background.value.removeSmallHert()
+// }
 
  const change = (index) => {
     componentTag.value = 'Component' + index
@@ -262,3 +265,83 @@ export default {
   height: 100%;
 }
 </style>
+
+
+<!-- 显示/隐藏 动画 -->
+<!--<template>-->
+<!--  <transition name="fade">-->
+<!--    <div v-if="show">我是一个div组件</div>-->
+<!--  </transition>-->
+<!--  <button @click="toggleShow">切换组件</button></template>-->
+<!--<script>-->
+<!--export default {-->
+<!--  data() {-->
+<!--    return {-->
+<!--      show: true-->
+<!--    };-->
+<!--  },-->
+<!--    methods:{-->
+<!--      toggleShow(){-->
+<!--        this.show=!this.show;-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
+
+<!--<style>-->
+<!--.fade-enter-active,.fade-leave-active {-->
+<!--  transition: opacity .5s;-->
+<!--}-->
+<!--.fade-enter,.fade-leave-to {-->
+<!--  opacity: 0;-->
+<!--}-->
+<!--</style>-->
+
+
+<!-- 放大动画 -->
+
+<!--<template>-->
+<!--  <transition name="fade">-->
+<!--    <div id="myView" v-if="show" style="background-color: #2c3e50;width: 100px;height: 50px;margin-left: 40%">我是一个div组件</div>-->
+<!--  </transition>-->
+<!--  <button @click="toggleShow">放大</button>-->
+<!--</template>-->
+<!--<script>-->
+<!--export default {-->
+<!--  data() {-->
+<!--    return {-->
+<!--      show: true-->
+<!--    };-->
+<!--  },-->
+<!--  methods:{-->
+<!--    toggleShow(){-->
+<!--      // this.show=!this.show;-->
+<!--      let v = document.getElementById("myView")-->
+
+<!--      // translate(-50%, -50%) scale(${-0.5})-->
+<!--      v.style.transition = `all 0.7s linear`; // 添加动画效果-->
+<!--      v.style.transform = `scale(${-0.5})`;-->
+<!--      // v.setAttribute("style","scale(2);")-->
+
+<!--      // v.setAttribute("class","bigAction")-->
+<!--      // // 2秒后要移除class属性，否则下次就不执行shake动画了-->
+<!--      // // setTimeout(()=>{event.target.removeAttribute("class")},2000);-->
+<!--      // setTimeout(()=>{-->
+<!--      //   console.log("bubbleHandel is doing")-->
+<!--      //   v.removeAttribute("class")-->
+<!--      //   v.setAttribute("style","display:none");-->
+<!--      // },2000)-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</script>-->
+
+<!--<style>-->
+<!--/*.fade-enter-active,.fade-leave-active {*/-->
+<!--/*  transition: opacity .5s;*/-->
+<!--/*}*/-->
+<!--/*.fade-enter,.fade-leave-to {*/-->
+<!--/*  opacity: 0;*/-->
+<!--/*}*/-->
+<!--</style>-->
+

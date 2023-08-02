@@ -32,3 +32,6 @@ module.exports = defineConfig({
   // publicPath: process.env.NODE_ENV === 'production' ? '/sub-directory/' : '/'
   publicPath: ''
 })
+
+// devServer：选项用于配置开发服务器。你可以根据实际需求进行配置，例如设置代理、改变默认端口等。
+// publicPath：选项用于配置项目的基本路径。默认情况下，Vue项目的基本路径是 / ，即根目录。
