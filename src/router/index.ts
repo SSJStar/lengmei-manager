@@ -22,6 +22,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/test/SecondView.vue"),
   },
   {
+    path: "/dragAndMoveView",
+    component: () => import("../views/test/DragAndMoveView.vue"),
+  },
+  {
     path: "/a",
     component: () => import("../views/test/Component1.vue"),
   },

@@ -219,20 +219,22 @@
 <!--    <BubblesView ref="background"></BubblesView>-->
 <!--  </div>-->
   <div id="login">
-    <BubblesView ref="background"></BubblesView>
+<!--    <BubblesView></BubblesView>-->
+    <BubblesHitView></BubblesHitView>
   </div>
 
-  <div style="padding: 30px">
-    <button @click="change('1')">组件1</button>
-    <button @click="change('2')">组件2</button>
-    <button @click="change('3')">组件3</button>
-    <Component :is="componentTag"></Component>
-  </div>
+<!--  <div style="padding: 30px">-->
+<!--    <button @click="change('1')">组件1</button>-->
+<!--    <button @click="change('2')">组件2</button>-->
+<!--    <button @click="change('3')">组件3</button>-->
+<!--    <Component :is="componentTag"></Component>-->
+<!--  </div>-->
 </template>
 <script setup lang="ts">
 import { ref } from "vue"
 const componentTag = ref("Component1")
-import BubblesView from "@/views/test/BubblesView.vue"
+import BubblesView from "@/views/test/bubbles/BubblesView.vue"
+import BubblesHitView from "@/views/test/bubbles/BubblesHitView.vue"
 
 const background = ref();
 // function createLoves(e){
