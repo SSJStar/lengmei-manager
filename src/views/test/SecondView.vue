@@ -165,9 +165,6 @@
 
 <!-- 测试watch -->
 <!--<template>-->
-<!--&lt;!&ndash;  <keep-alive include="a">&ndash;&gt;-->
-<!--&lt;!&ndash;    <component :is="view"></component>&ndash;&gt;-->
-<!--&lt;!&ndash;  </keep-alive>&ndash;&gt;-->
 
 <!--&lt;!&ndash;   将（只）缓存组件name为a或者b的组件, 结合动态组件使用 &ndash;&gt;-->
 <!--  <keep-alive include="a,b">-->
@@ -214,14 +211,69 @@
 <!--</script>-->
 
 
-<template>
-<!--  <div id="login" v-on:mousedown.left="createLoves($event)" v-on:mouseup="removeSmallHert">-->
-<!--    <BubblesView ref="background"></BubblesView>-->
+<!-- 动态组件 + 组件缓存 START-->
+<!--<template>-->
+<!--  <component :is="componentName"></component>-->
+<!--  <button @click="changeAction">切换</button>-->
+<!--</template>-->
+
+<!--<script setup lang="ts">-->
+<!--import a from './Component1.vue'-->
+<!--import b from './Component2.vue'-->
+<!--import {ref, shallowRef} from "vue";-->
+<!--// import c from './Component3.vue'-->
+
+<!--const componentName = shallowRef(a)-->
+<!--//切换组件-->
+<!--const changeAction = () => {-->
+<!--  if (componentName.value == a){-->
+<!--    componentName.value = b-->
+<!--    return-->
+<!--  }-->
+<!--  componentName.value = a-->
+<!--}-->
+<!--</script>-->
+
+<!--<template>-->
+<!--  <div style="padding: 30px">-->
+<!--    <Component4 aa="哈哈哈"></Component4>-->
+<!--    <button @click="change('1')">组件1</button>-->
+<!--    <button @click="change('2')">组件2</button>-->
+<!--    <button @click="change('3')">组件3</button>-->
+<!--    <button @click="change('4')">组件4</button>-->
+<!--    <keep-alive include="Component1" exclude="Component4">-->
+<!--      <Component :is="componentTag"></Component>-->
+<!--    </keep-alive>-->
 <!--  </div>-->
-  <div id="login">
-<!--    <BubblesView></BubblesView>-->
-    <BubblesHitView></BubblesHitView>
-  </div>
+<!--</template>-->
+<!--<script setup lang="ts">-->
+<!--import { ref } from "vue"-->
+
+<!--const componentTag = ref("Component1")-->
+<!--const change = (index) => {-->
+<!--  componentTag.value = 'Component' + index-->
+<!--}-->
+<!--</script>-->
+
+<!--&lt;!&ndash; 此处再添加一个script标签，用于抛出组件 &ndash;&gt;-->
+<!--<script lang="ts">-->
+
+<!--import Component1 from './Component1.vue'-->
+<!--import Component2 from './Component2.vue'-->
+<!--import Component3 from './Component3.vue'-->
+<!--import Component4 from './Component4.vue'-->
+<!--export default {-->
+<!--  components: {Component1, Component2, Component3, Component4},-->
+<!--}-->
+<!--</script>-->
+<!-- 动态组件 + 组件缓存 END-->
+
+<!--  气泡动画  START-->
+<!--<template>-->
+<!--  <div id="login">-->
+<!--&lt;!&ndash;    <BubblesView></BubblesView>&ndash;&gt;-->
+<!--    <BubblesHitView></BubblesHitView>-->
+<!--  </div>-->
 
 <!--  <div style="padding: 30px">-->
 <!--    <button @click="change('1')">组件1</button>-->
@@ -229,47 +281,48 @@
 <!--    <button @click="change('3')">组件3</button>-->
 <!--    <Component :is="componentTag"></Component>-->
 <!--  </div>-->
-</template>
-<script setup lang="ts">
-import { ref } from "vue"
-const componentTag = ref("Component1")
-import BubblesView from "@/views/test/bubbles/BubblesView.vue"
-import BubblesHitView from "@/views/test/bubbles/BubblesHitView.vue"
+<!--</template>-->
+<!--<script setup lang="ts">-->
+<!--import { ref } from "vue"-->
+<!--const componentTag = ref("Component1")-->
+<!--import BubblesView from "@/views/test/bubbles/BubblesView.vue"-->
+<!--import BubblesHitView from "@/views/test/bubbles/BubblesHitView.vue"-->
 
-const background = ref();
-// function createLoves(e){
-//   background.value.createLoves(e)
-// }
-// function removeSmallHert(){
-//   background.value.removeSmallHert()
-// }
+<!--const background = ref();-->
+<!--// function createLoves(e){-->
+<!--//   background.value.createLoves(e)-->
+<!--// }-->
+<!--// function removeSmallHert(){-->
+<!--//   background.value.removeSmallHert()-->
+<!--// }-->
 
- const change = (index) => {
-    componentTag.value = 'Component' + index
- }
+<!-- const change = (index) => {-->
+<!--    componentTag.value = 'Component' + index-->
+<!-- }-->
 
-</script>
-<!-- 此处再添加一个script标签，用于抛出组件 -->
-<script lang="ts">
-import Component1 from './Component1.vue'
-import Component2 from './Component2.vue'
-import Component3 from './Component3.vue'
-export default {
-  components: {Component1, Component2, Component3},
-}
-</script>
-<style>
-#login{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-</style>
+<!--</script>-->
+<!--&lt;!&ndash; 此处再添加一个script标签，用于抛出组件 &ndash;&gt;-->
+<!--<script lang="ts">-->
+<!--import Component1 from './Component1.vue'-->
+<!--import Component2 from './Component2.vue'-->
+<!--import Component3 from './Component3.vue'-->
+<!--export default {-->
+<!--  components: {Component1, Component2, Component3},-->
+<!--}-->
+<!--</script>-->
+<!--<style>-->
+<!--#login{-->
+<!--  position: absolute;-->
+<!--  top: 0;-->
+<!--  left: 0;-->
+<!--  width: 100%;-->
+<!--  height: 100%;-->
+<!--}-->
+<!--</style>-->
+<!--  气泡动画  END-->
 
 
-<!-- 显示/隐藏 动画 -->
+<!-- 显示/隐藏 动画 START-->
 <!--<template>-->
 <!--  <transition name="fade">-->
 <!--    <div v-if="show">我是一个div组件</div>-->
@@ -346,4 +399,19 @@ export default {
 <!--/*  opacity: 0;*/-->
 <!--/*}*/-->
 <!--</style>-->
+<!-- 显示/隐藏 动画 END-->
 
+
+
+
+<!-- 子组件不接受pros，数据去哪儿了 START-->
+<template>
+  <div style="padding: 30px">
+    <Component4 aa="哈哈哈" tt="张三" pp="李四"></Component4>
+    <button>占坑</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import Component4 from './Component4.vue'
+</script>

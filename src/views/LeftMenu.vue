@@ -128,7 +128,7 @@ import {useRoute, useRouter} from "vue-router";
 onMounted(() => {
   const router = useRoute();
 
-  // console.log("3333" + router.name);
+  console.log("3333 - " + router.name + "  " + router.path + "  " + router.query);
   // 保证网页刷新，菜单栏选中状态不丢失
   if (router.name === "home") {
     sel.value = "1";

@@ -12,4 +12,13 @@
     <img src="https://ss2.bdstatic.com/70cFvnSh.jpg" alt="">
   </div>
 </template>
-<script setup></script>
+<script setup>
+import {onBeforeUnmount, onMounted} from "vue";
+
+onMounted(()=>{
+  console.log("Component2.vue   onMounted");
+})
+onBeforeUnmount(()=>{
+  console.log("Component2.vue   即将卸载组件");
+});
+</script>
