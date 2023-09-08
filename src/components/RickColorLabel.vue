@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex" v-html="showText"></div>
+  <div class="richDiv" v-html="showText"></div>
 </template>
 
 <script lang="ts" setup>
@@ -7,13 +7,13 @@ import { onUpdated, ref } from "vue";
 
 const props = defineProps<{
   text: string;
+  defaultColor:string; //默认的颜色
   replaceText: string; //高亮的内容
   replaceColor:string; //高亮的颜色
   refreshCount:number; //这个值变化，当前组件就会刷新
 }>();
-
 let showText = ref("");
-
+// let def = `rgb(${props.defaultColor}, ${number}, ${number})`
 onUpdated(()=>{
   console.log("RickColorLabel onUpdated执行一次！"+props.replaceText);
   // TODO:  实现原理
@@ -24,3 +24,10 @@ onUpdated(()=>{
 });
 
 </script>
+
+<style>
+.richDiv {
+  display: flex;
+  color: v-bind(defaultColor);
+}
+</style>

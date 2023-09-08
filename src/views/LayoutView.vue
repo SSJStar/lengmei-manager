@@ -291,11 +291,21 @@ function childSelectAction(index) {
   background-color: v-bind(leftMenuBgColor);
   height: calc(100% - v-bind(navgation_height));
 }
-
+/* 3,12,37 */
 .router-div {
   flex: 1;
   /*height: calc(100% - 51px);*/
-  background-color: white;
+  /*background-color: #071334;*/
+  /*! autoprefixer: ignore next */
+
+  /*background: -webkit-gradient(*/
+  /*    linear,*/
+  /*    100% 0,*/
+  /*    0 0,*/
+  /*    from(rgba(58, 96, 199, 0.8)),*/
+  /*    to(rgb(57 63 187))*/
+  /*);*/
+  background: -webkit-linear-gradient(top,rgba(7, 19, 72, 0.8),rgb(7 13 47));
   height: calc(100% - v-bind(navgation_height));
 }
 

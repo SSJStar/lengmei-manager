@@ -6,7 +6,7 @@ export const staticVars = {
   LEFTMENU_FOLDOFFW: "64px", //菜单栏-收起-宽度
   BASE_URL: "http://vue.wclimb.site/images/",
   SOCKET_DOMAIN: "https://xx.xx.com/filesystem/upload/",
-  BACKGROUNBD_COLOR: "#545c64",
+  BACKGROUNBD_COLOR: "#3c3c46", //菜单栏-背景颜色  #545c64
   LEFTMENU_FONTSIZE: "18px", //菜单栏-字体大小
   //导航栏配置
   NAVGATION_HEIGHT: "70px", //导航栏 - 高度

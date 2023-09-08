@@ -15,7 +15,7 @@
     </div>
 
     <!--  列表  -->
-    <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" style="width: 100%">
+    <el-table :data="tableData.slice((currentPage-1) * pageSize,currentPage *pageSize)" class="tbList">
 <!--    <el-table :data="elTableData" style="width: 100%">-->
       <!--  第一列  -->
     <el-table-column prop="nick_name" label="用户名" width="180" >
@@ -39,7 +39,11 @@
     </el-table-column>
 
     <!--  第三列  -->
-    <el-table-column prop="phone" label="手机号" />
+    <el-table-column prop="phone" label="手机号" >
+      <template #default="scope">
+        <span size="small">{{scope.row.phone}}</span>
+      </template>
+    </el-table-column>
 
     <!--  第四列  -->
     <el-table-column label="绑定/解绑">
@@ -72,7 +76,7 @@
         :total="tableData.length"
         v-model="currentPage"
         @current-change ="handelPageChange"
-        style="float: right"
+        style="float: right;background-color: transparent"
     />
     <!-- 添加用户 -->
     <div class="addUserDiv" v-show="isShowAddUserDiv">
@@ -414,4 +418,26 @@ let handelClear = ()=> {
 .searchInput {
   width: calc(80% - 50px);
 }
+.tbList {
+  width: 100%;
+  background-color: transparent;
+}
+
+.deviceListDiv /deep/ .el-table th,
+.deviceListDiv /deep/ .el-table tr,
+.deviceListDiv /deep/ .el-table td {
+  background-color: transparent !important;
+}
+
+/* 设置表格字体样式 */
+.deviceListDiv /deep/ .el-table {
+  font-weight: bold;
+  font-size: 18px;
+  color: #e8e8e8;
+}
+/*default-color="#FFF"*/
+/*.deviceListDiv /deep/ span {*/
+/*  color: white*/
+/*}*/
+/*RickColorLabel*/
 </style>
