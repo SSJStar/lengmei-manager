@@ -305,8 +305,9 @@ function childSelectAction(index) {
   /*    from(rgba(58, 96, 199, 0.8)),*/
   /*    to(rgb(57 63 187))*/
   /*);*/
-  background: -webkit-linear-gradient(top,rgba(7, 19, 72, 0.8),rgb(7 13 47));
-  height: calc(100% - v-bind(navgation_height));
+  /* 内容区域 - 过渡颜色 */
+  /*background: -webkit-linear-gradient(top,rgba(7, 19, 72, 0.9),rgba(7, 13, 47, 0.9));*/
+  /*height: calc(100% - v-bind(navgation_height));*/
 }
 
 body {

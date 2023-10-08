@@ -1,5 +1,5 @@
 <template>
-  <div class="deviceListDiv">
+  <div class="userListDiv">
     <!--  搜索  -->
     <div disabled="flex">
       <el-input
@@ -393,7 +393,7 @@ let handelClear = ()=> {
 </script>
 
 <style scoped>
-.deviceListDiv {
+.userListDiv {
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
@@ -423,20 +423,21 @@ let handelClear = ()=> {
   background-color: transparent;
 }
 
-.deviceListDiv /deep/ .el-table th,
-.deviceListDiv /deep/ .el-table tr,
-.deviceListDiv /deep/ .el-table td {
+/* 设置表格透明色 */
+.userListDiv /deep/ .el-table th,
+.userListDiv /deep/ .el-table tr,
+.userListDiv /deep/ .el-table td {
   background-color: transparent !important;
 }
 
 /* 设置表格字体样式 */
-.deviceListDiv /deep/ .el-table {
+.userListDiv /deep/ .el-table {
   font-weight: bold;
   font-size: 18px;
-  color: #e8e8e8;
+  /*color: #e8e8e8;*/   /* 灰色 */
 }
 /*default-color="#FFF"*/
-/*.deviceListDiv /deep/ span {*/
+/*.userListDiv /deep/ span {*/
 /*  color: white*/
 /*}*/
 /*RickColorLabel*/

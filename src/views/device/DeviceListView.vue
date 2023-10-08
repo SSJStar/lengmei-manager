@@ -486,4 +486,11 @@ const handleDelete = (index: number, row: object) => {
   /*box-shadow: none;*/
   border: none;/* 去掉阴影 */
 }
+
+/* 设置表格字体样式 */
+.deviceListDiv /deep/ .el-table {
+  font-weight: bold;
+  font-size: 18px;
+  /*color: #e8e8e8;*/   /* 灰色 */
+}
 </style>
